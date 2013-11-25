@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<com.bean.notes.widget.ExpendMenu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/btn_capture_expend_ring_width"
+    android:layout_height="@dimen/btn_capture_expend_ring_width">
 
     <ImageView
         android:id="@+id/slice_icon_reminder"
-        android:visibility="invisible"
+        android:visibility="visible"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_capture_reminder"
@@ -12,7 +14,7 @@
 
     <ImageView
         android:id="@+id/slice_icon_camera"
-        android:visibility="invisible"
+        android:visibility="visible"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_capture_camera"
@@ -20,7 +22,7 @@
 
     <ImageView
         android:id="@+id/slice_icon_text"
-        android:visibility="invisible"
+        android:visibility="visible"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_capture_text"
@@ -28,7 +30,7 @@
 
     <ImageView
         android:id="@+id/slice_icon_voice"
-        android:visibility="invisible"
+        android:visibility="visible"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_capture_mic"
@@ -36,17 +38,9 @@
 
     <ImageView
         android:id="@+id/slice_icon_checklist"
-        android:visibility="invisible"
+        android:visibility="visible"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_capture_checkmark"
         android:scaleType="centerInside"/>
-
-    <ImageView
-        android:id="@+id/slice_icon_sketch"
-        android:visibility="invisible"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_capture_sketch"
-        android:scaleType="centerInside"/>
-</merge>
+</com.bean.notes.widget.ExpendMenu>

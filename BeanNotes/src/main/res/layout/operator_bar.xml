@@ -18,9 +18,9 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/operator_bar_height"
         android:layout_alignParentBottom="true"
-        android:background="@color/abs__bright_foreground_disabled_holo_dark"></LinearLayout>
+        android:background="@color/wheel_expend_bg"></LinearLayout>
 
-    <RelativeLayout
+    <ImageView
         android:id="@+id/wheel_colors"
         android:layout_width="@dimen/btn_capture_outer_ring_width"
         android:layout_height="@dimen/btn_capture_outer_ring_width"
@@ -28,10 +28,31 @@
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="@dimen/btn_capture_outer_ring_offset"
         android:background="@drawable/wheel_colors"
-        android:visibility="gone">
+        android:visibility="gone"/>
 
-        <include layout="@layout/operator_icons"/>
-    </RelativeLayout>
+    <ImageView
+        android:id="@+id/wheel_bg"
+        android:layout_width="@dimen/btn_capture_expend_ring_height"
+        android:layout_height="@dimen/btn_capture_expend_ring_height"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/btn_capture_expend_ring_offset"
+        android:background="@drawable/wheel_bg"
+        android:visibility="gone"/>
+
+    <include layout="@layout/operator_icons"
+        android:layout_width="@dimen/btn_capture_expend_ring_width"
+        android:layout_height="@dimen/btn_capture_expend_ring_width"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"/>
+
+    <ImageView
+        android:layout_width="@dimen/btn_capture_bg_wh"
+        android:layout_height="@dimen/btn_capture_bg_wh"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/btn_capture_bg_offset"
+        android:background="@drawable/wheel_bg"/>
 
     <ImageView
         android:id="@+id/btn_capture"
@@ -39,7 +60,7 @@
         android:layout_height="@dimen/btn_capture_wh"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="-16dp"
+        android:layout_marginBottom="@dimen/btn_capture_offset"
         android:background="@drawable/btn_capture_off"/>
 
 </RelativeLayout>

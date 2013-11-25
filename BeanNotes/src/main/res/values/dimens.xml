@@ -3,7 +3,12 @@
     <dimen name="operator_bar_outline_height">70dp</dimen>
     <dimen name="btn_capture_wh">88dp</dimen>
     <dimen name="btn_capture_offset">-16dp</dimen>
+    <dimen name="btn_capture_bg_wh">92dp</dimen>
+    <dimen name="btn_capture_bg_offset">-18dp</dimen>
     <dimen name="btn_capture_outer_ring_height">324dp</dimen>
     <dimen name="btn_capture_outer_ring_width">324dp</dimen>
     <dimen name="btn_capture_outer_ring_offset">-137.0dip</dimen>
+    <dimen name="btn_capture_expend_ring_height">300dp</dimen>
+    <dimen name="btn_capture_expend_ring_width">300dp</dimen>
+    <dimen name="btn_capture_expend_ring_offset">-125.0dip</dimen>
 </resources>
