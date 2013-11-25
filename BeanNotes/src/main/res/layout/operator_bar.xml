@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_alignParentBottom="true"
+    android:background="@android:color/transparent">
+
+    <View
+        android:id="@+id/content_shadow"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/content_shadow"
+        android:visibility="gone"/>
+
+    <LinearLayout
+        android:id="@+id/operator_panel"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/operator_bar_height"
+        android:layout_alignParentBottom="true"
+        android:background="@color/abs__bright_foreground_disabled_holo_dark"></LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/wheel_colors"
+        android:layout_width="@dimen/btn_capture_outer_ring_width"
+        android:layout_height="@dimen/btn_capture_outer_ring_width"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/btn_capture_outer_ring_offset"
+        android:background="@drawable/wheel_colors"
+        android:visibility="gone">
+
+        <include layout="@layout/operator_icons"/>
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/btn_capture"
+        android:layout_width="@dimen/btn_capture_wh"
+        android:layout_height="@dimen/btn_capture_wh"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="-16dp"
+        android:background="@drawable/btn_capture_off"/>
+
+</RelativeLayout>

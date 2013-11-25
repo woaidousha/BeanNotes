@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/BeanNotes.iml" filepath="$PROJECT_DIR$/BeanNotes.iml" />
+      <module fileurl="file://$PROJECT_DIR$/BeanNotes/BeanNotes-BeanNotes.iml" filepath="$PROJECT_DIR$/BeanNotes/BeanNotes-BeanNotes.iml" />
+    </modules>
+  </component>
+</project>
+

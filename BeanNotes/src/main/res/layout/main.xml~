@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/operator_bar_height"
+        android:layout_alignParentTop="true">
+        <fragment
+            android:id="@+id/work_space_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:name="com.bean.notes.ui.WorkSpaceList"/>
+        <fragment
+            android:id="@+id/note_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:name="com.bean.notes.ui.NoteList"/>
+        <fragment
+            android:id="@+id/note"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:name="com.bean.notes.ui.Note"/>
+    </LinearLayout>
+
+    <include
+        android:id="@+id/operator_bar"
+        layout="@layout/operator_bar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"/>
+
+</RelativeLayout>

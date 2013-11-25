@@ -1,0 +1,9 @@
+<resources>
+    <dimen name="operator_bar_height">48dp</dimen>
+    <dimen name="operator_bar_outline_height">70dp</dimen>
+    <dimen name="btn_capture_wh">88dp</dimen>
+    <dimen name="btn_capture_offset">-16dp</dimen>
+    <dimen name="btn_capture_outer_ring_height">324dp</dimen>
+    <dimen name="btn_capture_outer_ring_width">324dp</dimen>
+    <dimen name="btn_capture_outer_ring_offset">-137.0dip</dimen>
+</resources>
