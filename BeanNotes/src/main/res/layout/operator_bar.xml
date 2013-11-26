@@ -40,7 +40,8 @@
         android:background="@drawable/wheel_bg"
         android:visibility="gone"/>
 
-    <include layout="@layout/operator_icons"
+    <include android:id="@+id/expend_menu"
+        layout="@layout/expend_menu"
         android:layout_width="@dimen/btn_capture_expend_ring_width"
         android:layout_height="@dimen/btn_capture_expend_ring_width"
         android:layout_centerHorizontal="true"

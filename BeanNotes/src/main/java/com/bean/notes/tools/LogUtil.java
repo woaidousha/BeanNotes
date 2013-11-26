@@ -20,4 +20,8 @@ public class LogUtil {
         Log.d(tag, text);
     }
 
+    public static void lyl(String text) {
+        Log.d("lyl", text);
+    }
+
 }

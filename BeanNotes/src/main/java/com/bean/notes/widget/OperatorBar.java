@@ -29,6 +29,7 @@ public class OperatorBar extends RelativeLayout implements View.OnClickListener 
     private View mWheelBg;
     private View mContentShadow;
     private ImageView mIconReminder;
+    private ExpendMenu mExpendMenu;
 
     public OperatorBar(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -37,6 +38,7 @@ public class OperatorBar extends RelativeLayout implements View.OnClickListener 
         mWheelColors = findViewById(R.id.wheel_colors);
         mWheelBg = findViewById(R.id.wheel_bg);
         mContentShadow = findViewById(R.id.content_shadow);
+        mExpendMenu = (ExpendMenu) findViewById(R.id.expend_menu);
         calculateIcons();
         mContentShadow.setOnClickListener(this);
         mBtnCapture.setOnClickListener(this);
@@ -65,6 +67,7 @@ public class OperatorBar extends RelativeLayout implements View.OnClickListener 
         mWheelColors.setVisibility(selected ? View.VISIBLE : View.GONE);
         mWheelBg.setVisibility(selected ? View.VISIBLE : View.GONE);
         mContentShadow.setVisibility(selected ? View.VISIBLE : View.GONE);
+        mExpendMenu.setVisibility(selected ? View.VISIBLE : View.GONE);
     }
 
     private void calculateIcons() {
