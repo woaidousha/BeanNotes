@@ -25,16 +25,17 @@ public class OperatorBar extends RelativeLayout implements View.OnClickListener 
     private static final String TAG = "OperatorBar";
 
     private ImageView mBtnCapture;
+    private View mBtnCaptureBg;
     private View mWheelColors;
     private View mWheelBg;
     private View mContentShadow;
-    private ImageView mIconReminder;
     private ExpendMenu mExpendMenu;
 
     public OperatorBar(Context context, AttributeSet attrs) {
         super(context, attrs);
         LayoutInflater.from(context).inflate(R.layout.operator_bar, this, true);
         mBtnCapture = (ImageView) findViewById(R.id.btn_capture);
+        mBtnCaptureBg = findViewById(R.id.btn_capture_bg);
         mWheelColors = findViewById(R.id.wheel_colors);
         mWheelBg = findViewById(R.id.wheel_bg);
         mContentShadow = findViewById(R.id.content_shadow);
@@ -64,6 +65,8 @@ public class OperatorBar extends RelativeLayout implements View.OnClickListener 
     private void refreshWheelViews() {
         boolean selected = mBtnCapture.isSelected();
         mBtnCapture.setImageResource(selected ? R.drawable.btn_capture_on : R.drawable.btn_capture_off);
+        mBtnCaptureBg.setVisibility(selected ? View.GONE : View.VISIBLE);
+
         mWheelColors.setVisibility(selected ? View.VISIBLE : View.GONE);
         mWheelBg.setVisibility(selected ? View.VISIBLE : View.GONE);
         mContentShadow.setVisibility(selected ? View.VISIBLE : View.GONE);

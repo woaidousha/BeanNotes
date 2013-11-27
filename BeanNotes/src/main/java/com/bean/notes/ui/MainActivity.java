@@ -27,7 +27,6 @@ public class MainActivity extends SherlockFragmentActivity implements View.OnFoc
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         mOperatorBar = (OperatorBar) findViewById(R.id.operator_bar);
-        mOperatorBar.setOnFocusChangeListener(this);
     }
 
     @Override
