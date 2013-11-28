@@ -88,10 +88,10 @@ public class ExpendMenu extends ViewGroup {
 
         mPaintLineBg = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaintLineBg.setStrokeWidth(6);
-        mPaintLineBg.setColor(Color.parseColor("#F2F2F2"));
+        mPaintLineBg.setColor(Color.parseColor("#ffffffff"));
         mPaintLine = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaintLine.setStrokeWidth(2);
-        mPaintLine.setColor(Color.GRAY);
+        mPaintLine.setColor(Color.parseColor("#ffd2d2d2"));
         mPaintTouchBg = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaintTouchBg.setColor(mTouchBgColor);
     }
