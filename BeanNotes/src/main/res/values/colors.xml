@@ -3,4 +3,5 @@
 <resources>
     <color name="content_shadow">#55000000</color>
     <color name="wheel_expend_bg">#fff2f2f2</color>
+    <color name="expend_menu_selected_bg">#80e7a846</color>
 </resources>

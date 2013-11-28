@@ -21,7 +21,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import com.bean.notes.tools.LogUtil;
+import com.bean.notes.R;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -32,6 +32,7 @@ public class ExpendMenu extends ViewGroup {
     private Context mContext;
     private int mCenterX;
     private int mCenterY;
+    private int mTouchBgColor;
 
     private int mRadius;
 
@@ -39,9 +40,8 @@ public class ExpendMenu extends ViewGroup {
     private float mTouchX;
     private float mTouchY;
 
-    private ArrayList<DivideLine> mDivideLineRadians = null;
+    private ArrayList<DivideLine> mDivideLines = null;
     private int mTouchBgIndex = -1;
-
 
     class DivideLine {
         DivideLine() {
@@ -76,6 +76,7 @@ public class ExpendMenu extends ViewGroup {
         super(context, attrs);
         setWillNotDraw(false);
         mContext = context;
+        mTouchBgColor = mContext.getResources().getColor(R.color.expend_menu_selected_bg);
     }
 
     @Override
@@ -122,59 +123,66 @@ public class ExpendMenu extends ViewGroup {
         Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         paint.setStrokeWidth(2);
         paint.setColor(Color.GRAY);
-        if (mDivideLineRadians == null) {
+        if (mDivideLines == null) {
             calculateDivideLine();
         }
-        for (DivideLine line : mDivideLineRadians) {
+        for (DivideLine line : mDivideLines) {
             canvas.drawLine(mCenterX, mCenterY, line.endX + mCenterX, line.endY + mCenterY, paint);
         }
     }
 
     private void drawTouchBackground(Canvas canvas) {
-        if (mDivideLineRadians == null) {
+        if (mDivideLines == null) {
             return;
         }
-        if (!mTouched) {
+        int lineSize = mDivideLines.size();
+        if (!mTouched || lineSize == 0) {
             return;
         }
-        DivideLine line1 = new DivideLine(0, getHeight(), 0);
-        DivideLine line2 = new DivideLine(getWidth(), getHeight(), (float) Math.PI);
+        DivideLine line1 = new DivideLine(-1 * Math.PI / 2, getHeight(), 0);
+        DivideLine line2 = new DivideLine((float) Math.PI / 2 * 3, getWidth(), getHeight());
+        mTouchBgIndex = -1;
+        boolean drawEdge = false;
         if (mTouchY > mCenterY) {
+            drawEdge = true;
             if (mTouchX < mCenterX) {
                 mTouchBgIndex = 0;
-                line2 = mDivideLineRadians.get(0);
+                line2 = mDivideLines.get(mTouchBgIndex);
             } else {
-                mTouchBgIndex = mDivideLineRadians.size() - 1;
-                line1 = mDivideLineRadians.get(mTouchBgIndex);
+                mTouchBgIndex = lineSize - 1;
+                line1 = mDivideLines.get(mTouchBgIndex);
             }
         } else {
             double radian = Math.atan(1.0 * (mCenterY - mTouchY) / (mCenterX - mTouchX));
-            for (int i = 0; i < mDivideLineRadians.size(); i++) {
-                DivideLine line = mDivideLineRadians.get(i);
-                if (radian <= line.slope) {
+            if (radian < 0) {
+                radian += Math.PI;
+            }
+            double degree = Math.toDegrees(radian);
+            for (int i = 0; i < lineSize; i++) {
+                DivideLine line = mDivideLines.get(i);
+                if (degree <= line.getDegree()) {
                     mTouchBgIndex = i;
                     line2 = line;
                     if (i != 0) {
-                        line1 = mDivideLineRadians.get(i - 1);
+                        line1 = mDivideLines.get(i - 1);
                     }
                     break;
                 }
             }
-            if (mTouchBgIndex == mDivideLineRadians.size() - 1) {
-                line1 = mDivideLineRadians.get(mDivideLineRadians.size() - 1);
+            if (mTouchBgIndex == -1) {
+                mTouchBgIndex = lineSize - 1;
+                line1 = mDivideLines.get(mTouchBgIndex);
             }
         }
         Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        paint.setColor(Color.YELLOW);
+        paint.setColor(mTouchBgColor);
         RectF rectF = new RectF(0, mCenterY - getHeight() / 2, getWidth(), mCenterY + getHeight() / 2);
-        LogUtil.lyl(line1.toString());
-        LogUtil.lyl(line2.toString());
-        canvas.drawArc(rectF, (float) Math.toDegrees(line1.getDegree()) + 180, (float) Math.toDegrees(line2.getDegree()) + 180, true, paint);
+        canvas.drawArc(rectF, (float) line1.getDegree() + 180, (float) line2.getDegree() - (float) line1.getDegree(), true, paint);
     }
 
     public void calculateDivideLine() {
         int radius = getWidth() / 2;
-        mDivideLineRadians = new ArrayList<DivideLine>();
+        mDivideLines = new ArrayList<DivideLine>();
         for (int i = 0; i < getChildCount() - 1; i++) {
             DivideLine line = new DivideLine();
             View view1 = getChildAt(i);
@@ -199,10 +207,9 @@ public class ExpendMenu extends ViewGroup {
             line.slope = radian;
             line.endX = x;
             line.endY = y;
-            LogUtil.lyl(line.toString());
-            mDivideLineRadians.add(line);
+            mDivideLines.add(line);
         }
-        Collections.sort(mDivideLineRadians, new Comparator<DivideLine>() {
+        Collections.sort(mDivideLines, new Comparator<DivideLine>() {
             @Override
             public int compare(DivideLine lhs, DivideLine rhs) {
                 if (lhs.slope < rhs.slope) {
