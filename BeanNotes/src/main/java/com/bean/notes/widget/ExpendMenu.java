@@ -13,10 +13,7 @@
 package com.bean.notes.widget;
 
 import android.content.Context;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.RectF;
+import android.graphics.*;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -34,11 +31,16 @@ public class ExpendMenu extends ViewGroup {
     private int mCenterY;
     private int mTouchBgColor;
 
+    private Paint mPaintLineBg;
+    private Paint mPaintLine;
+    private Paint mPaintTouchBg;
+
     private int mRadius;
 
     private boolean mTouched;
     private float mTouchX;
     private float mTouchY;
+    private RectF mRectFTouchBg;
 
     private ArrayList<DivideLine> mDivideLines = null;
     private int mTouchBgIndex = -1;
@@ -83,6 +85,15 @@ public class ExpendMenu extends ViewGroup {
         setWillNotDraw(false);
         mContext = context;
         mTouchBgColor = mContext.getResources().getColor(R.color.expend_menu_selected_bg);
+
+        mPaintLineBg = new Paint(Paint.ANTI_ALIAS_FLAG);
+        mPaintLineBg.setStrokeWidth(6);
+        mPaintLineBg.setColor(Color.parseColor("#F2F2F2"));
+        mPaintLine = new Paint(Paint.ANTI_ALIAS_FLAG);
+        mPaintLine.setStrokeWidth(2);
+        mPaintLine.setColor(Color.GRAY);
+        mPaintTouchBg = new Paint(Paint.ANTI_ALIAS_FLAG);
+        mPaintTouchBg.setColor(mTouchBgColor);
     }
 
 
@@ -131,14 +142,12 @@ public class ExpendMenu extends ViewGroup {
     }
 
     private void drawDivideLine(Canvas canvas) {
-        Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        paint.setStrokeWidth(2);
-        paint.setColor(Color.GRAY);
         if (mDivideLines == null) {
             calculateDivideLine();
         }
         for (DivideLine line : mDivideLines) {
-            canvas.drawLine(mCenterX, mCenterY, line.endX + mCenterX, line.endY + mCenterY, paint);
+            canvas.drawLine(mCenterX, mCenterY, line.endX + mCenterX, line.endY + mCenterY, mPaintLineBg);
+            canvas.drawLine(mCenterX, mCenterY, line.endX + mCenterX, line.endY + mCenterY, mPaintLine);
         }
     }
 
@@ -186,10 +195,10 @@ public class ExpendMenu extends ViewGroup {
                 line1 = mDivideLines.get(mTouchBgIndex - 1);
             }
         }
-        Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        paint.setColor(mTouchBgColor);
-        RectF rectF = new RectF(0, mCenterY - getHeight() / 2, getWidth(), mCenterY + getHeight() / 2);
-        canvas.drawArc(rectF, (float) line1.getDegree() + 180, (float) line2.getDegree() - (float) line1.getDegree(), true, paint);
+        if (mRectFTouchBg == null) {
+            mRectFTouchBg = new RectF(0, mCenterY - getHeight() / 2, getWidth(), mCenterY + getHeight() / 2);
+        }
+        canvas.drawArc(mRectFTouchBg, (float) line1.getDegree() + 180, (float) line2.getDegree() - (float) line1.getDegree(), true, mPaintTouchBg);
     }
 
     public void calculateDivideLine() {

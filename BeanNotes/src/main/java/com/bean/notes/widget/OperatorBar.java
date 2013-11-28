@@ -69,20 +69,16 @@ public class OperatorBar extends RelativeLayout implements View.OnClickListener,
         }
     }
 
-    public void onLostFocus() {
-        mBtnCapture.setSelected(false);
-        refreshWheelViews();
-    }
-
     private void refreshWheelViews() {
         boolean selected = mBtnCapture.isSelected();
         mBtnCapture.setImageResource(selected ? R.drawable.btn_capture_on : R.drawable.btn_capture_off);
-        mBtnCaptureBg.setVisibility(selected ? View.GONE : View.VISIBLE);
 
+        mBtnCaptureBg.setVisibility(selected ? View.GONE : View.VISIBLE);
         mContentShadow.setVisibility(selected ? View.VISIBLE : View.GONE);
         mWheelColors.setVisibility(selected ? View.VISIBLE : View.GONE);
         mWheelBg.setVisibility(selected ? View.VISIBLE : View.GONE);
         mExpendMenu.setVisibility(selected ? View.VISIBLE : View.GONE);
+
         Animation animation = AnimationUtils.loadAnimation(getContext(), isClosed() ? R.anim.pop_in_fast : R.anim.pop_away);
         mWheelColors.startAnimation(animation);
         mWheelBg.startAnimation(animation);
