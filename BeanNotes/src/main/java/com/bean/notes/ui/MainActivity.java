@@ -18,7 +18,9 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.bean.notes.R;
 import com.bean.notes.widget.OperatorBar;
 
-public class MainActivity extends SherlockFragmentActivity implements View.OnFocusChangeListener {
+import static com.bean.notes.tools.Constant.OperatorMenu.*;
+
+public class MainActivity extends SherlockFragmentActivity implements OperatorBar.OnMenuItemClickListener, View.OnClickListener {
 
     private OperatorBar mOperatorBar;
 
@@ -27,14 +29,26 @@ public class MainActivity extends SherlockFragmentActivity implements View.OnFoc
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         mOperatorBar = (OperatorBar) findViewById(R.id.operator_bar);
+        mOperatorBar.setOnMenuItemClickListener(this);
     }
 
     @Override
-    public void onFocusChange(View v, boolean hasFocus) {
-        int viewId = v.getId();
-        if (viewId == R.id.operator_bar
-            && !hasFocus) {
-            mOperatorBar.onLostFocus();
+    public void onMenuItemClick(int menuIndex) {
+        switch (menuIndex) {
+            case MENU_ITEM_REMINDER:
+                break;
+            case MENU_ITEM_CAMERA:
+                break;
+            case MENU_ITEM_TEXT:
+                break;
+            case MENU_ITEM_VOICE:
+                break;
+            case MENU_ITEM_CHECKLIST:
+                break;
         }
+    }
+
+    @Override
+    public void onClick(View v) {
     }
 }

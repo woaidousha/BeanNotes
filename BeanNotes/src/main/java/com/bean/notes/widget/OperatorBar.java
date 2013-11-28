@@ -16,11 +16,13 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import com.bean.notes.R;
 
-public class OperatorBar extends RelativeLayout implements View.OnClickListener {
+public class OperatorBar extends RelativeLayout implements View.OnClickListener, ExpendMenu.OnTouchUpListener {
 
     private static final String TAG = "OperatorBar";
 
@@ -31,6 +33,12 @@ public class OperatorBar extends RelativeLayout implements View.OnClickListener 
     private View mContentShadow;
     private ExpendMenu mExpendMenu;
 
+    private OnMenuItemClickListener mMenuItemClickListener;
+
+    public interface OnMenuItemClickListener {
+        public void onMenuItemClick(int menuIndex);
+    }
+
     public OperatorBar(Context context, AttributeSet attrs) {
         super(context, attrs);
         LayoutInflater.from(context).inflate(R.layout.operator_bar, this, true);
@@ -40,9 +48,13 @@ public class OperatorBar extends RelativeLayout implements View.OnClickListener 
         mWheelBg = findViewById(R.id.wheel_bg);
         mContentShadow = findViewById(R.id.content_shadow);
         mExpendMenu = (ExpendMenu) findViewById(R.id.expend_menu);
-        calculateIcons();
         mContentShadow.setOnClickListener(this);
         mBtnCapture.setOnClickListener(this);
+        mExpendMenu.setOnTouchUpListener(this);
+    }
+
+    public void setOnMenuItemClickListener(OnMenuItemClickListener menuItemClickListener) {
+        this.mMenuItemClickListener = menuItemClickListener;
     }
 
     @Override
@@ -67,15 +79,27 @@ public class OperatorBar extends RelativeLayout implements View.OnClickListener 
         mBtnCapture.setImageResource(selected ? R.drawable.btn_capture_on : R.drawable.btn_capture_off);
         mBtnCaptureBg.setVisibility(selected ? View.GONE : View.VISIBLE);
 
+        mContentShadow.setVisibility(selected ? View.VISIBLE : View.GONE);
         mWheelColors.setVisibility(selected ? View.VISIBLE : View.GONE);
         mWheelBg.setVisibility(selected ? View.VISIBLE : View.GONE);
-        mContentShadow.setVisibility(selected ? View.VISIBLE : View.GONE);
         mExpendMenu.setVisibility(selected ? View.VISIBLE : View.GONE);
+        Animation animation = AnimationUtils.loadAnimation(getContext(), isClosed() ? R.anim.pop_in_fast : R.anim.pop_away);
+        mWheelColors.startAnimation(animation);
+        mWheelBg.startAnimation(animation);
+        Animation animationMenu = AnimationUtils.loadAnimation(getContext(), isClosed() ? R.anim.pop_in_fast_menu : R.anim.pop_away_menu);
+        mExpendMenu.startAnimation(animationMenu);
     }
 
-    private void calculateIcons() {
-        float centetX = mBtnCapture.getX();
-        float centerY = mBtnCapture.getY();
+    public boolean isClosed() {
+        return mBtnCapture.isSelected();
     }
 
+    @Override
+    public void onOnTouchUp(int menuIndex) {
+        mBtnCapture.setSelected(false);
+        refreshWheelViews();
+        if (mMenuItemClickListener != null) {
+            mMenuItemClickListener.onMenuItemClick(menuIndex);
+        }
+    }
 }

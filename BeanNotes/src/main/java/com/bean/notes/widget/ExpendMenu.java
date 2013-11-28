@@ -43,6 +43,8 @@ public class ExpendMenu extends ViewGroup {
     private ArrayList<DivideLine> mDivideLines = null;
     private int mTouchBgIndex = -1;
 
+    private OnTouchUpListener mOutEdgeListener;
+
     class DivideLine {
         DivideLine() {
         }
@@ -72,11 +74,20 @@ public class ExpendMenu extends ViewGroup {
         }
     }
 
+    public interface OnTouchUpListener {
+        public void onOnTouchUp(int menuIndex);
+    }
+
     public ExpendMenu(Context context, AttributeSet attrs) {
         super(context, attrs);
         setWillNotDraw(false);
         mContext = context;
         mTouchBgColor = mContext.getResources().getColor(R.color.expend_menu_selected_bg);
+    }
+
+
+    public void setOnTouchUpListener(OnTouchUpListener touchUpListener) {
+        this.mOutEdgeListener = touchUpListener;
     }
 
     @Override
@@ -142,9 +153,10 @@ public class ExpendMenu extends ViewGroup {
         DivideLine line1 = new DivideLine(-1 * Math.PI / 2, getHeight(), 0);
         DivideLine line2 = new DivideLine((float) Math.PI / 2 * 3, getWidth(), getHeight());
         mTouchBgIndex = -1;
-        boolean drawEdge = false;
+        if (calculateOutOfEdge()) {
+            return;
+        }
         if (mTouchY > mCenterY) {
-            drawEdge = true;
             if (mTouchX < mCenterX) {
                 mTouchBgIndex = 0;
                 line2 = mDivideLines.get(mTouchBgIndex);
@@ -170,8 +182,8 @@ public class ExpendMenu extends ViewGroup {
                 }
             }
             if (mTouchBgIndex == -1) {
-                mTouchBgIndex = lineSize - 1;
-                line1 = mDivideLines.get(mTouchBgIndex);
+                mTouchBgIndex = lineSize;
+                line1 = mDivideLines.get(mTouchBgIndex - 1);
             }
         }
         Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -221,23 +233,33 @@ public class ExpendMenu extends ViewGroup {
         });
     }
 
+    private boolean calculateOutOfEdge() {
+        double distanceX = Math.pow(mTouchX - mCenterX, 2);
+        double distanceY = Math.pow(mTouchY - mCenterY, 2);
+        double distance = Math.sqrt(distanceX + distanceY);
+        int radius = getWidth() / 2;
+        return distance > radius;
+    }
+
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         int action = event.getAction();
+        mTouchX = event.getX();
+        mTouchY = event.getY();
         switch (action) {
             case MotionEvent.ACTION_DOWN:
                 mTouched = true;
-                mTouchX = event.getX();
-                mTouchY = event.getY();
                 break;
             case MotionEvent.ACTION_MOVE:
-                mTouchX = event.getX();
-                mTouchY = event.getY();
                 break;
             case MotionEvent.ACTION_UP:
                 mTouched = false;
-                mTouchX = 0;
-                mTouchY = 0;
+                if (calculateOutOfEdge()) {
+                    mTouchBgIndex = -1;
+                }
+                if (mOutEdgeListener != null) {
+                    mOutEdgeListener.onOnTouchUp(mTouchBgIndex);
+                }
                 break;
         }
         invalidate();

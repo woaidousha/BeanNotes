@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <resources>
     <color name="content_shadow">#55000000</color>
     <color name="wheel_expend_bg">#fff2f2f2</color>
