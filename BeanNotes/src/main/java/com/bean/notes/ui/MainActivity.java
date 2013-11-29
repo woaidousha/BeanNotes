@@ -99,11 +99,11 @@ public class MainActivity extends SherlockFragmentActivity implements OperatorBa
         final View in = searchMode ? mBottomBar : mMenuItemSearch;
         final float outHeight = out.getHeight();
         final float inHeight = in.getHeight();
-        Animation animation = new TranslateAnimation(0, 0, 0, outHeight);
-        animation.setInterpolator(new LinearInterpolator());
-        animation.setDuration(AnimationUtil.BOTTOM_BAR_DURATION);
-        animation.setFillAfter(false);
-        animation.setAnimationListener(new Animation.AnimationListener() {
+        Animation outAnim = new TranslateAnimation(0, 0, 0, outHeight);
+        outAnim.setInterpolator(new LinearInterpolator());
+        outAnim.setDuration(AnimationUtil.BOTTOM_BAR_DURATION);
+        outAnim.setFillAfter(false);
+        outAnim.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
             }
@@ -111,10 +111,10 @@ public class MainActivity extends SherlockFragmentActivity implements OperatorBa
             @Override
             public void onAnimationEnd(Animation animation) {
                 out.setVisibility(View.GONE);
-                Animation animation1 = new TranslateAnimation(0, 0, inHeight, 0);
-                animation1.setInterpolator(new LinearInterpolator());
-                animation1.setDuration(AnimationUtil.BOTTOM_BAR_DURATION);
-                animation1.setFillAfter(false);
+                Animation inAnim = new TranslateAnimation(0, 0, inHeight, 0);
+                inAnim.setInterpolator(new LinearInterpolator());
+                inAnim.setDuration(AnimationUtil.BOTTOM_BAR_DURATION);
+                inAnim.setFillAfter(false);
                 animation.setAnimationListener(new Animation.AnimationListener() {
                     @Override
                     public void onAnimationStart(Animation animation) {
@@ -129,13 +129,13 @@ public class MainActivity extends SherlockFragmentActivity implements OperatorBa
                     }
                 });
                 in.setVisibility(View.VISIBLE);
-                in.startAnimation(animation1);
+                in.startAnimation(inAnim);
             }
 
             @Override
             public void onAnimationRepeat(Animation animation) {
             }
         });
-        out.startAnimation(animation);
+        out.startAnimation(outAnim);
     }
 }
