@@ -33,10 +33,10 @@ public class OperatorBar extends RelativeLayout implements View.OnClickListener,
     private View mContentShadow;
     private ExpendMenu mExpendMenu;
 
-    private OnMenuItemClickListener mMenuItemClickListener;
+    private OnOperatorItemClickListener mOperatorItemClickListener;
 
-    public interface OnMenuItemClickListener {
-        public void onMenuItemClick(int menuIndex);
+    public interface OnOperatorItemClickListener {
+        public void onOperatorItemClick(int operatorIndex);
     }
 
     public OperatorBar(Context context, AttributeSet attrs) {
@@ -53,8 +53,8 @@ public class OperatorBar extends RelativeLayout implements View.OnClickListener,
         mExpendMenu.setOnTouchUpListener(this);
     }
 
-    public void setOnMenuItemClickListener(OnMenuItemClickListener menuItemClickListener) {
-        this.mMenuItemClickListener = menuItemClickListener;
+    public void setOnMenuItemClickListener(OnOperatorItemClickListener menuItemClickListener) {
+        this.mOperatorItemClickListener = menuItemClickListener;
     }
 
     @Override
@@ -91,11 +91,11 @@ public class OperatorBar extends RelativeLayout implements View.OnClickListener,
     }
 
     @Override
-    public void onOnTouchUp(int menuIndex) {
+    public void onOnTouchUp(int operatorIndex) {
         mBtnCapture.setSelected(false);
         refreshWheelViews();
-        if (mMenuItemClickListener != null) {
-            mMenuItemClickListener.onMenuItemClick(menuIndex);
+        if (mOperatorItemClickListener != null) {
+            mOperatorItemClickListener.onOperatorItemClick(operatorIndex);
         }
     }
 }

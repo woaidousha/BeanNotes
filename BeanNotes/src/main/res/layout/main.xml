@@ -12,9 +12,10 @@
         android:layout_marginBottom="@dimen/operator_bar_height"
         android:layout_alignParentTop="true">
         <Button
+            android:id="@+id/toggle_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/abs__action_bar_home_description"/>
+            android:text="@string/app_name"/>
         <!--<fragment
             android:id="@+id/work_space_list"
             android:layout_width="match_parent"
@@ -30,6 +31,26 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:name="com.bean.notes.ui.Note"/>-->
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/operator_panel"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/abs__action_bar_default_height"
+        android:layout_alignParentBottom="true"
+        android:gravity="center_vertical"
+        android:background="@color/wheel_expend_bg">
+        <ImageView
+            style="@style/Bottom_Bar_Menu_Item"
+            android:id="@+id/bottom_bar_search"
+            android:src="@drawable/ic_search_dark" />
+
+        <include
+            android:id="@+id/bottom_bar"
+            layout="@layout/bottom_menu"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/abs__action_bar_default_height"/>
     </LinearLayout>
 
     <com.bean.notes.widget.OperatorBar

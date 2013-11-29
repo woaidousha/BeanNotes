@@ -10,14 +10,10 @@
  *                                     www.pekall.com
  *--------------------------------------------------------------------------------------------- 
 */
-package com.bean.notes.ui;
+package com.bean.notes.tools;
 
-import android.view.View;
-import com.actionbarsherlock.app.SherlockFragment;
+public class AnimationUtil {
 
-public class Note extends SherlockFragment implements View.OnClickListener {
-    @Override
-    public void onClick(View v) {
+    public static final int BOTTOM_BAR_DURATION = 50;
 
-    }
 }

@@ -12,16 +12,6 @@
         android:background="@color/content_shadow"
         android:visibility="gone"/>
 
-    <LinearLayout
-        android:id="@+id/operator_panel"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/operator_bar_height"
-        android:layout_alignParentBottom="true"
-        android:background="@color/wheel_expend_bg">
-
-    </LinearLayout>
-
     <ImageView
         android:id="@+id/wheel_colors"
         android:layout_width="@dimen/btn_capture_outer_ring_width"

@@ -12,12 +12,7 @@
 */
 package com.bean.notes.ui;
 
-import android.view.View;
-import com.actionbarsherlock.app.SherlockFragment;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
 
-public class Note extends SherlockFragment implements View.OnClickListener {
-    @Override
-    public void onClick(View v) {
-
-    }
+public class SearchActivity extends SherlockFragmentActivity {
 }

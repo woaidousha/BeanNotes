@@ -77,7 +77,7 @@ public class ExpendMenu extends ViewGroup {
     }
 
     public interface OnTouchUpListener {
-        public void onOnTouchUp(int menuIndex);
+        public void onOnTouchUp(int operatorIndex);
     }
 
     public ExpendMenu(Context context, AttributeSet attrs) {

@@ -1,3 +1,11 @@
 <resources>
 
+    <style name="Bottom_Bar_Menu_Item">
+        <item name="android:layout_width">@dimen/abs__action_bar_default_height</item>
+        <item name="android:layout_height">@dimen/abs__action_bar_default_height</item>
+        <item name="android:scaleType">centerInside</item>
+        <item name="android:background">@drawable/bottombar_button_selector</item>
+        <item name="android:clickable">true</item>
+    </style>
+
 </resources>
