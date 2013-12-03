@@ -18,28 +18,22 @@ import com.j256.ormlite.table.DatabaseTable;
 
 import java.util.Date;
 
-@DatabaseTable(tableName = "notes")
-public class Note {
+@DatabaseTable(tableName = "check_items")
+public class CheckItem {
 
-    public Note() {
+    public CheckItem() {
     }
 
     @DatabaseField(generatedId = true, useGetSet = true)
     private long _id;
     @DatabaseField(useGetSet = true, dataType = DataType.LONG)
     private long parent_id;
-    @DatabaseField(useGetSet = true, dataType = DataType.STRING)
-    private String name;
     @DatabaseField(useGetSet = true, dataType = DataType.DATE_LONG)
     private Date createTime;
-    @DatabaseField(useGetSet = true, dataType = DataType.BOOLEAN)
-    private boolean reminder;
     @DatabaseField(useGetSet = true, dataType = DataType.STRING)
     private String text;
-    @DatabaseField(useGetSet = true, dataType = DataType.DOUBLE)
-    private double latitude;
-    @DatabaseField(useGetSet = true, dataType = DataType.DOUBLE)
-    private double longitude;
+    @DatabaseField(useGetSet = true, dataType = DataType.BOOLEAN)
+    private boolean checked;
 
     public long get_id() {
         return _id;
@@ -57,28 +51,12 @@ public class Note {
         this.parent_id = parent_id;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public Date getCreateTime() {
         return createTime;
     }
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
-    }
-
-    public boolean getReminder() {
-        return reminder;
-    }
-
-    public void setReminder(boolean reminder) {
-        this.reminder = reminder;
     }
 
     public String getText() {
@@ -89,19 +67,11 @@ public class Note {
         this.text = text;
     }
 
-    public double getLatitude() {
-        return latitude;
+    public boolean getChecked() {
+        return checked;
     }
 
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
-    }
-
-    public double getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
+    public void setChecked(boolean checked) {
+        this.checked = checked;
     }
 }

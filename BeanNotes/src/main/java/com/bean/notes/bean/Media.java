@@ -18,10 +18,10 @@ import com.j256.ormlite.table.DatabaseTable;
 
 import java.util.Date;
 
-@DatabaseTable(tableName = "notes")
-public class Note {
+@DatabaseTable(tableName = "medias")
+public class Media {
 
-    public Note() {
+    public Media() {
     }
 
     @DatabaseField(generatedId = true, useGetSet = true)
@@ -29,17 +29,15 @@ public class Note {
     @DatabaseField(useGetSet = true, dataType = DataType.LONG)
     private long parent_id;
     @DatabaseField(useGetSet = true, dataType = DataType.STRING)
-    private String name;
+    private String mime_type;
     @DatabaseField(useGetSet = true, dataType = DataType.DATE_LONG)
     private Date createTime;
-    @DatabaseField(useGetSet = true, dataType = DataType.BOOLEAN)
-    private boolean reminder;
     @DatabaseField(useGetSet = true, dataType = DataType.STRING)
-    private String text;
-    @DatabaseField(useGetSet = true, dataType = DataType.DOUBLE)
-    private double latitude;
-    @DatabaseField(useGetSet = true, dataType = DataType.DOUBLE)
-    private double longitude;
+    private String _data;
+    @DatabaseField(useGetSet = true, dataType = DataType.STRING)
+    private String media_small;
+    @DatabaseField(useGetSet = true, dataType = DataType.STRING)
+    private String media_middle;
 
     public long get_id() {
         return _id;
@@ -57,12 +55,12 @@ public class Note {
         this.parent_id = parent_id;
     }
 
-    public String getName() {
-        return name;
+    public String getMime_type() {
+        return mime_type;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setMime_type(String mime_type) {
+        this.mime_type = mime_type;
     }
 
     public Date getCreateTime() {
@@ -73,35 +71,27 @@ public class Note {
         this.createTime = createTime;
     }
 
-    public boolean getReminder() {
-        return reminder;
+    public String get_data() {
+        return _data;
     }
 
-    public void setReminder(boolean reminder) {
-        this.reminder = reminder;
+    public void set_data(String _data) {
+        this._data = _data;
     }
 
-    public String getText() {
-        return text;
+    public String getMedia_small() {
+        return media_small;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setMedia_small(String media_small) {
+        this.media_small = media_small;
     }
 
-    public double getLatitude() {
-        return latitude;
+    public String getMedia_middle() {
+        return media_middle;
     }
 
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
-    }
-
-    public double getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
+    public void setMedia_middle(String media_middle) {
+        this.media_middle = media_middle;
     }
 }

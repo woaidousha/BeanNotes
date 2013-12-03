@@ -12,21 +12,35 @@
 */
 package com.bean.notes.bean;
 
+import com.j256.ormlite.field.DataType;
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
+
+@DatabaseTable(tableName = "workspace")
 public class WorkSpace {
 
-    private Long id;
-    private String name;
-    private Boolean security;
-    private Integer color;
-    private Integer count;
-    private String description;
-
-    public Long getId() {
-        return id;
+    public WorkSpace() {
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    @DatabaseField(generatedId = true, useGetSet = true)
+    private Long _id;
+    @DatabaseField(useGetSet = true, dataType = DataType.STRING)
+    private String name;
+    @DatabaseField(useGetSet = true, dataType = DataType.BOOLEAN)
+    private boolean security;
+    @DatabaseField(useGetSet = true, dataType = DataType.INTEGER)
+    private int color;
+    @DatabaseField(useGetSet = true, dataType = DataType.INTEGER)
+    private int count;
+    @DatabaseField(useGetSet = true, dataType = DataType.STRING)
+    private String description;
+
+    public Long get_id() {
+        return _id;
+    }
+
+    public void set_id(Long _id) {
+        this._id = _id;
     }
 
     public String getName() {
@@ -37,27 +51,27 @@ public class WorkSpace {
         this.name = name;
     }
 
-    public Boolean getSecurity() {
+    public boolean getSecurity() {
         return security;
     }
 
-    public void setSecurity(Boolean security) {
+    public void setSecurity(boolean security) {
         this.security = security;
     }
 
-    public Integer getColor() {
+    public int getColor() {
         return color;
     }
 
-    public void setColor(Integer color) {
+    public void setColor(int color) {
         this.color = color;
     }
 
-    public Integer getCount() {
+    public int getCount() {
         return count;
     }
 
-    public void setCount(Integer count) {
+    public void setCount(int count) {
         this.count = count;
     }
 
@@ -67,5 +81,17 @@ public class WorkSpace {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Override
+    public String toString() {
+        return "WorkSpace{" +
+                "_id=" + _id +
+                ", name='" + name + '\'' +
+                ", security=" + security +
+                ", color=" + color +
+                ", count=" + count +
+                ", description='" + description + '\'' +
+                '}';
     }
 }
