@@ -32,6 +32,7 @@ public class MainActivity extends SherlockFragmentActivity
 
     private int mCurrentFragment;
     private boolean mSearchMode;
+    private boolean mFirstLaunch = true;
 
     private FragmentManager mFragmentManager;
 
@@ -106,7 +107,6 @@ public class MainActivity extends SherlockFragmentActivity
     private void initFragments() {
         mFragmentManager = getSupportFragmentManager();
         mCurrentFragment = BaseIndexFragment.FM_INDEX_WORKSPACE;
-        mMenuItemListener = new MenuItemListener();
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
         transaction.add(R.id.fragment_container, getWorkSpaceList(), WorkSpaceList.class.getSimpleName());
         transaction.add(R.id.fragment_container, getNoteList(), NoteList.class.getSimpleName());
@@ -163,6 +163,7 @@ public class MainActivity extends SherlockFragmentActivity
         if (mNote == null) {
             mNote = new Note();
             mNote.setSwitchFragment(this);
+            mMenuItemListener = new MenuItemListener();
             mNote.setMenuItemStateListener(mMenuItemListener);
         }
         return mNote;
@@ -192,11 +193,11 @@ public class MainActivity extends SherlockFragmentActivity
     private void toggleBottomBar() {
         boolean searchMode = mSearchMode;
         mSearchMode = mCurrentFragment != BaseIndexFragment.FM_INDEX_NOTE;
-        if (mSearchMode == searchMode) {
+        if (!mFirstLaunch && mSearchMode == searchMode) {
             return;
         }
-        final View out = mSearchMode ? mMenuItemSearch : mBottomBar;
-        final View in = mSearchMode ? mBottomBar : mMenuItemSearch;
+        final View in = mSearchMode ? mMenuItemSearch : mBottomBar;
+        final View out = mSearchMode ? mBottomBar : mMenuItemSearch;
         final float outHeight = out.getHeight();
         final float inHeight = in.getHeight();
         Animation outAnim = new TranslateAnimation(0, 0, 0, outHeight);
@@ -237,5 +238,6 @@ public class MainActivity extends SherlockFragmentActivity
             }
         });
         out.startAnimation(outAnim);
+        mFirstLaunch = false;
     }
 }

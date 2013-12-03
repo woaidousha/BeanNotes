@@ -23,6 +23,8 @@ public class Note extends BaseIndexFragment {
 
     private IMenuItemStateListener mMenuItemStateListener;
 
+    private boolean mTest;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.note_fragment, null);
@@ -47,44 +49,40 @@ public class Note extends BaseIndexFragment {
                 mSwitchFragmentListener.switchFragment(false);
             }
         } else if (viewId == R.id.bottom_bar_attach) {
-
         } else if (viewId == R.id.bottom_bar_share) {
-
         } else if (viewId == R.id.bottom_bar_star) {
-
         } else if (viewId == R.id.bottom_bar_delete) {
-
         }
     }
 
-    public void setMenuItemStateListener(IMenuItemStateListener starChangeListener) {
-        this.mMenuItemStateListener = starChangeListener;
+    public void setMenuItemStateListener(IMenuItemStateListener menuItemStateListener) {
+        this.mMenuItemStateListener = menuItemStateListener;
     }
 
     private void attach() {
-        boolean disable = false;
+        boolean disable = mTest;
         if (mMenuItemStateListener != null) {
             mMenuItemStateListener.onAttachStateChange(disable);
         }
     }
 
     private void share() {
-        boolean disable = false;
+        boolean disable = mTest;
         if (mMenuItemStateListener != null) {
             mMenuItemStateListener.onShareStateChange(disable);
         }
     }
 
     private void star() {
-        boolean stared = false;
-        boolean disable = false;
+        boolean stared = mTest;
+        boolean disable = mTest;
         if (mMenuItemStateListener != null) {
             mMenuItemStateListener.onStarStateChange(stared, disable);
         }
     }
 
     private void delete() {
-        boolean disable = false;
+        boolean disable = mTest;
         if (mMenuItemStateListener != null) {
             mMenuItemStateListener.onDeleteStateChange(disable);
         }
