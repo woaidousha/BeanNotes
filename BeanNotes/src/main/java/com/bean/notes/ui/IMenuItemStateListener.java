@@ -10,21 +10,13 @@
  *                                     www.pekall.com
  *--------------------------------------------------------------------------------------------- 
 */
-package com.bean.notes;
+package com.bean.notes.ui;
 
-import android.app.Application;
+public interface IMenuItemStateListener {
 
-public class BeanNotesApp extends Application {
+    public void onAttachStateChange(boolean disable);
+    public void onShareStateChange(boolean disable);
+    public void onStarStateChange(boolean stared, boolean disable);
+    public void onDeleteStateChange(boolean disable);
 
-    private static BeanNotesApp sInstance;
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        sInstance = this;
-    }
-
-    public static synchronized BeanNotesApp getInstance() {
-        return sInstance;
-    }
 }

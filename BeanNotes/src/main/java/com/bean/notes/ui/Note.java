@@ -12,12 +12,81 @@
 */
 package com.bean.notes.ui;
 
+import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
-import com.actionbarsherlock.app.SherlockFragment;
+import android.view.ViewGroup;
+import android.widget.TextView;
+import com.bean.notes.R;
 
-public class Note extends SherlockFragment implements View.OnClickListener {
+public class Note extends BaseIndexFragment {
+
+    private IMenuItemStateListener mMenuItemStateListener;
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.note_fragment, null);
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        TextView textView = (TextView) view.findViewById(R.id.text_view);
+        textView.setOnClickListener(this);
+    }
+
+    @Override
+    protected int getFragmentIndex() {
+        return FM_INDEX_NOTE;
+    }
+
     @Override
     public void onClick(View v) {
+        int viewId = v.getId();
+        if (viewId == R.id.text_view) {
+            if (mSwitchFragmentListener != null) {
+                mSwitchFragmentListener.switchFragment(false);
+            }
+        } else if (viewId == R.id.bottom_bar_attach) {
 
+        } else if (viewId == R.id.bottom_bar_share) {
+
+        } else if (viewId == R.id.bottom_bar_star) {
+
+        } else if (viewId == R.id.bottom_bar_delete) {
+
+        }
+    }
+
+    public void setMenuItemStateListener(IMenuItemStateListener starChangeListener) {
+        this.mMenuItemStateListener = starChangeListener;
+    }
+
+    private void attach() {
+        boolean disable = false;
+        if (mMenuItemStateListener != null) {
+            mMenuItemStateListener.onAttachStateChange(disable);
+        }
+    }
+
+    private void share() {
+        boolean disable = false;
+        if (mMenuItemStateListener != null) {
+            mMenuItemStateListener.onShareStateChange(disable);
+        }
+    }
+
+    private void star() {
+        boolean stared = false;
+        boolean disable = false;
+        if (mMenuItemStateListener != null) {
+            mMenuItemStateListener.onStarStateChange(stared, disable);
+        }
+    }
+
+    private void delete() {
+        boolean disable = false;
+        if (mMenuItemStateListener != null) {
+            mMenuItemStateListener.onDeleteStateChange(disable);
+        }
     }
 }

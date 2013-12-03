@@ -10,21 +10,26 @@
  *                                     www.pekall.com
  *--------------------------------------------------------------------------------------------- 
 */
-package com.bean.notes;
+package com.bean.notes.ui;
 
-import android.app.Application;
+import android.view.View;
+import com.actionbarsherlock.app.SherlockFragment;
 
-public class BeanNotesApp extends Application {
+public abstract class BaseIndexFragment extends SherlockFragment implements View.OnClickListener {
 
-    private static BeanNotesApp sInstance;
+    protected static final int FM_INDEX_WORKSPACE   = 0;
+    protected static final int FM_INDEX_NOTELIST    = 1;
+    protected static final int FM_INDEX_NOTE        = 2;
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        sInstance = this;
+    protected ISwitchFragment mSwitchFragmentListener;
+
+    protected abstract int getFragmentIndex();
+
+    protected void setSwitchFragment(ISwitchFragment switchFragment) {
+        this.mSwitchFragmentListener = switchFragment;
     }
 
-    public static synchronized BeanNotesApp getInstance() {
-        return sInstance;
+    public ISwitchFragment getSwitchFragment() {
+        return mSwitchFragmentListener;
     }
 }

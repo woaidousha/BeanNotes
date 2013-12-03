@@ -10,21 +10,10 @@
  *                                     www.pekall.com
  *--------------------------------------------------------------------------------------------- 
 */
-package com.bean.notes;
+package com.bean.notes.ui;
 
-import android.app.Application;
+public interface ISwitchFragment {
 
-public class BeanNotesApp extends Application {
+    public void switchFragment(boolean next);
 
-    private static BeanNotesApp sInstance;
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        sInstance = this;
-    }
-
-    public static synchronized BeanNotesApp getInstance() {
-        return sInstance;
-    }
 }

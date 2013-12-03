@@ -5,33 +5,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-    <LinearLayout
+    <FrameLayout
+        android:id="@+id/fragment_container"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="@dimen/operator_bar_height"
-        android:layout_alignParentTop="true">
-        <Button
-            android:id="@+id/toggle_btn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/app_name"/>
-        <!--<fragment
-            android:id="@+id/work_space_list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:name="com.bean.notes.ui.WorkSpaceList"/>
-        <fragment
-            android:id="@+id/note_list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:name="com.bean.notes.ui.NoteList"/>
-        <fragment
-            android:id="@+id/note"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:name="com.bean.notes.ui.Note"/>-->
-    </LinearLayout>
+        android:layout_alignParentTop="true"
+        android:background="@color/abs__bright_foreground_disabled_holo_dark">
+    </FrameLayout>
 
     <LinearLayout
         android:id="@+id/operator_panel"

@@ -12,7 +12,35 @@
 */
 package com.bean.notes.ui;
 
-import com.actionbarsherlock.app.SherlockFragment;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+import com.bean.notes.R;
 
-public class WorkSpaceList extends SherlockFragment {
+public class WorkSpaceList extends BaseIndexFragment {
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.work_space_list_fragment, null);
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        TextView textView = (TextView) view.findViewById(R.id.text_view);
+        textView.setOnClickListener(this);
+    }
+
+    @Override
+    protected int getFragmentIndex() {
+        return FM_INDEX_WORKSPACE;
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (mSwitchFragmentListener != null) {
+            mSwitchFragmentListener.switchFragment(true);
+        }
+    }
 }
