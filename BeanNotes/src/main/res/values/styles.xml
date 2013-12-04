@@ -1,5 +1,8 @@
 <resources>
 
+    <style name="BaseTheme" parent="Sherlock.__Theme.DarkActionBar">
+    </style>
+
     <style name="Bottom_Bar_Menu_Item">
         <item name="android:layout_width">@dimen/abs__action_bar_default_height</item>
         <item name="android:layout_height">@dimen/abs__action_bar_default_height</item>

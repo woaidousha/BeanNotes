@@ -17,6 +17,8 @@ import android.animation.ValueAnimator;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
@@ -24,7 +26,9 @@ import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
+import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.MenuItem;
 import com.bean.notes.R;
 import com.bean.notes.tools.AnimationUtil;
 import com.bean.notes.widget.OperatorBar;
@@ -33,10 +37,13 @@ import static com.bean.notes.tools.Constant.OperatorMenu.*;
 
 public class MainActivity extends SherlockFragmentActivity implements OperatorBar.OnOperatorItemClickListener, View.OnClickListener, ISwitchFragment {
 
+    private static final int MSG_UPDATE_COLOR = 0;
+
     private int mCurrentFragment;
     private boolean mSearchMode;
     private int mActionAndBottomBg;
     private boolean mColorMode;
+    private String mTitle;
     private boolean mFirstLaunch = true;
 
     private FragmentManager mFragmentManager;
@@ -56,6 +63,31 @@ public class MainActivity extends SherlockFragmentActivity implements OperatorBa
     private WorkSpaceList mWorkSpaceList;
 
     private MenuItemListener mMenuItemListener;
+
+    private Handler mHandler = new Handler() {
+
+        @Override
+        public void handleMessage(Message msg) {
+
+            switch (msg.what) {
+                case MSG_UPDATE_COLOR:
+                    handlerUpdateColor(msg.arg1);
+                    break;
+            }
+
+        }
+
+        private void handlerUpdateColor(int color) {
+            ColorDrawable currentActionDrawable = new ColorDrawable(color);
+            ActionBar actionBar = getSupportActionBar();
+            actionBar.setTitle("Title");
+            actionBar.setBackgroundDrawable(currentActionDrawable);
+            actionBar.setTitle(mTitle);
+            ColorDrawable currentBottomDrawable = new ColorDrawable(color);
+            mMenuPanel.setBackgroundDrawable(currentBottomDrawable);
+            mOperatorBar.setWheelBgColor(color);
+        }
+    };
 
     class MenuItemListener implements IMenuItemStateListener {
         @Override
@@ -96,6 +128,7 @@ public class MainActivity extends SherlockFragmentActivity implements OperatorBa
     }
 
     private void initData() {
+        mTitle = "";
         mActionAndBottomBg = getResources().getColor(R.color.bottom_bar_bg);
     }
 
@@ -128,10 +161,13 @@ public class MainActivity extends SherlockFragmentActivity implements OperatorBa
         transaction.hide(getNote());
         transaction.commit();
         switchFragment();
+        mFirstLaunch = false;
     }
 
     private void switchFragment() {
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
+        ActionBar actionBar = getSupportActionBar();
+        boolean homeAsUpEnable = false;
         if (mCurrentFragment == getWorkSpaceList().getFragmentIndex()) {
             transaction.show(getWorkSpaceList());
             transaction.hide(getNoteList());
@@ -140,11 +176,14 @@ public class MainActivity extends SherlockFragmentActivity implements OperatorBa
             transaction.hide(getWorkSpaceList());
             transaction.show(getNoteList());
             transaction.hide(getNote());
+            homeAsUpEnable = true;
         } else if (mCurrentFragment == getNote().getFragmentIndex()) {
             transaction.hide(getWorkSpaceList());
             transaction.hide(getNoteList());
             transaction.show(getNote());
+            homeAsUpEnable = true;
         }
+        actionBar.setDisplayHomeAsUpEnabled(homeAsUpEnable);
         transaction.commit();
         toggleBottomBar();
         switchActionAndMenuBg();
@@ -203,6 +242,32 @@ public class MainActivity extends SherlockFragmentActivity implements OperatorBa
         int viewId = v.getId();
     }
 
+    @Override
+    public void onBackPressed() {
+        onBackUI(true);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+        if (itemId == com.actionbarsherlock.R.id.abs__home
+            || itemId == android.R.id.home) {
+            onBackUI(false);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void onBackUI(boolean needFinish) {
+        if (mCurrentFragment == BaseIndexFragment.FM_INDEX_WORKSPACE) {
+            if (needFinish) {
+                super.onBackPressed();
+            }
+            return;
+        }
+        switchFragment(false);
+    }
+
     private void toggleBottomBar() {
         boolean searchMode = mSearchMode;
         mSearchMode = mCurrentFragment != BaseIndexFragment.FM_INDEX_NOTE;
@@ -251,12 +316,17 @@ public class MainActivity extends SherlockFragmentActivity implements OperatorBa
             }
         });
         out.startAnimation(outAnim);
-        mFirstLaunch = false;
     }
 
     private void switchActionAndMenuBg() {
         boolean colorMode = mColorMode;
         mColorMode = mCurrentFragment != BaseIndexFragment.FM_INDEX_WORKSPACE;
+        if (mFirstLaunch) {
+            mHandler.removeMessages(MSG_UPDATE_COLOR);
+            Message msg = mHandler.obtainMessage(MSG_UPDATE_COLOR, mActionAndBottomBg, 0);
+            mHandler.sendMessage(msg);
+            return;
+        }
         if (mColorMode == colorMode) {
             return;
         }
@@ -269,10 +339,9 @@ public class MainActivity extends SherlockFragmentActivity implements OperatorBa
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 int currentColor = (Integer) animation.getAnimatedValue();
-                ColorDrawable currentColorDrawable = new ColorDrawable(currentColor);
-                getSupportActionBar().setBackgroundDrawable(currentColorDrawable);
-                mMenuPanel.setBackgroundDrawable(currentColorDrawable);
-                mOperatorBar.setWheelBgColor(currentColor);
+                mHandler.removeMessages(MSG_UPDATE_COLOR);
+                Message msg = mHandler.obtainMessage(MSG_UPDATE_COLOR, currentColor, 0);
+                mHandler.sendMessage(msg);
             }
         });
         mMenuItemSearch.setImageResource(mColorMode ? R.drawable.ic_search : R.drawable.ic_search_dark);

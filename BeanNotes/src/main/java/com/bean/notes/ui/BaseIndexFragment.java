@@ -32,4 +32,5 @@ public abstract class BaseIndexFragment extends SherlockFragment implements View
     public ISwitchFragment getSwitchFragment() {
         return mSwitchFragmentListener;
     }
+
 }

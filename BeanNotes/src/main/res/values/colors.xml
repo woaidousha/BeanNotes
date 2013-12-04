@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="action_bar_title">#FFFFFFFF</color>
+
     <color name="content_shadow">#55000000</color>
     <color name="wheel_expend_bg">#fff2f2f2</color>
     <color name="bottom_bar_bg">#fff2f2f2</color>
