@@ -15,5 +15,6 @@ package com.bean.notes.tools;
 public class AnimationUtil {
 
     public static final int BOTTOM_BAR_DURATION = 50;
+    public static final int ACTION_BOTTOM_BAR_DURATION = 500;
 
 }

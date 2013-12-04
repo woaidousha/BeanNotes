@@ -13,6 +13,7 @@
 package com.bean.notes.widget;
 
 import android.content.Context;
+import android.graphics.drawable.GradientDrawable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,6 +34,8 @@ public class OperatorBar extends RelativeLayout implements View.OnClickListener,
     private View mContentShadow;
     private ExpendMenu mExpendMenu;
 
+    private GradientDrawable mCaptureBgDrawable;
+
     private OnOperatorItemClickListener mOperatorItemClickListener;
 
     public interface OnOperatorItemClickListener {
@@ -46,6 +49,8 @@ public class OperatorBar extends RelativeLayout implements View.OnClickListener,
         mBtnCaptureBg = findViewById(R.id.btn_capture_bg);
         mWheelColors = findViewById(R.id.wheel_colors);
         mWheelBg = findViewById(R.id.wheel_bg);
+        mCaptureBgDrawable = (GradientDrawable) getResources().getDrawable(R.drawable.wheel_bg);
+        mBtnCaptureBg.setBackgroundDrawable(mCaptureBgDrawable);
         mContentShadow = findViewById(R.id.content_shadow);
         mExpendMenu = (ExpendMenu) findViewById(R.id.expend_menu);
         mContentShadow.setOnClickListener(this);
@@ -96,6 +101,13 @@ public class OperatorBar extends RelativeLayout implements View.OnClickListener,
         refreshWheelViews();
         if (mOperatorItemClickListener != null) {
             mOperatorItemClickListener.onOperatorItemClick(operatorIndex);
+        }
+    }
+
+    public void setWheelBgColor(int color) {
+        if (mCaptureBgDrawable != null) {
+            mCaptureBgDrawable.setColor(color);
+            mBtnCaptureBg.invalidate();
         }
     }
 }

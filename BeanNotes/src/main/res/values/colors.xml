@@ -2,6 +2,7 @@
 <resources>
     <color name="content_shadow">#55000000</color>
     <color name="wheel_expend_bg">#fff2f2f2</color>
+    <color name="bottom_bar_bg">#fff2f2f2</color>
     <color name="expend_menu_selected_bg">#80e7a846</color>
     <color name="bottom_bar_item_pressed_background">#26000000</color>
     <color name="bottom_bar_item_focused_background">#1a000000</color>

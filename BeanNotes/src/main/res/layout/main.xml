@@ -16,13 +16,13 @@
     </FrameLayout>
 
     <LinearLayout
-        android:id="@+id/operator_panel"
+        android:id="@+id/menu_panel"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="@dimen/abs__action_bar_default_height"
         android:layout_alignParentBottom="true"
         android:gravity="center_vertical"
-        android:background="@color/wheel_expend_bg">
+        android:background="@color/bottom_bar_bg">
         <ImageView
             style="@style/Bottom_Bar_Menu_Item"
             android:id="@+id/bottom_bar_search"

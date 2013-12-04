@@ -12,6 +12,10 @@
 */
 package com.bean.notes.ui;
 
+import android.animation.ArgbEvaluator;
+import android.animation.ValueAnimator;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -27,17 +31,19 @@ import com.bean.notes.widget.OperatorBar;
 
 import static com.bean.notes.tools.Constant.OperatorMenu.*;
 
-public class MainActivity extends SherlockFragmentActivity
-    implements OperatorBar.OnOperatorItemClickListener, View.OnClickListener, ISwitchFragment {
+public class MainActivity extends SherlockFragmentActivity implements OperatorBar.OnOperatorItemClickListener, View.OnClickListener, ISwitchFragment {
 
     private int mCurrentFragment;
     private boolean mSearchMode;
+    private int mActionAndBottomBg;
+    private boolean mColorMode;
     private boolean mFirstLaunch = true;
 
     private FragmentManager mFragmentManager;
 
     private OperatorBar mOperatorBar;
 
+    private View mMenuPanel;
     private ImageView mMenuItemSearch;
     private View mBottomBar;
     private ImageView mMenuItemAttach;
@@ -84,14 +90,20 @@ public class MainActivity extends SherlockFragmentActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+        initData();
         initViews();
         initFragments();
+    }
+
+    private void initData() {
+        mActionAndBottomBg = getResources().getColor(R.color.bottom_bar_bg);
     }
 
     private void initViews() {
         mOperatorBar = (OperatorBar) findViewById(R.id.operator_bar);
         mMenuItemSearch = (ImageView) findViewById(R.id.bottom_bar_search);
         mMenuItemSearch.setOnClickListener(this);
+        mMenuPanel = findViewById(R.id.menu_panel);
         mBottomBar = findViewById(R.id.bottom_bar);
         mMenuItemAttach = (ImageView) findViewById(R.id.bottom_bar_attach);
         mMenuItemShare = (ImageView) findViewById(R.id.bottom_bar_share);
@@ -135,6 +147,7 @@ public class MainActivity extends SherlockFragmentActivity
         }
         transaction.commit();
         toggleBottomBar();
+        switchActionAndMenuBg();
     }
 
     @Override
@@ -240,4 +253,30 @@ public class MainActivity extends SherlockFragmentActivity
         out.startAnimation(outAnim);
         mFirstLaunch = false;
     }
+
+    private void switchActionAndMenuBg() {
+        boolean colorMode = mColorMode;
+        mColorMode = mCurrentFragment != BaseIndexFragment.FM_INDEX_WORKSPACE;
+        if (mColorMode == colorMode) {
+            return;
+        }
+        int lastColor = mActionAndBottomBg;
+        //TODO: change the blue to workspace color
+        mActionAndBottomBg = mColorMode ? Color.BLUE : getResources().getColor(R.color.bottom_bar_bg);
+        ValueAnimator colorAnimator = ValueAnimator.ofObject(new ArgbEvaluator(), lastColor, mActionAndBottomBg);
+        colorAnimator.setDuration(AnimationUtil.ACTION_BOTTOM_BAR_DURATION);
+        colorAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                int currentColor = (Integer) animation.getAnimatedValue();
+                ColorDrawable currentColorDrawable = new ColorDrawable(currentColor);
+                getSupportActionBar().setBackgroundDrawable(currentColorDrawable);
+                mMenuPanel.setBackgroundDrawable(currentColorDrawable);
+                mOperatorBar.setWheelBgColor(currentColor);
+            }
+        });
+        mMenuItemSearch.setImageResource(mColorMode ? R.drawable.ic_search : R.drawable.ic_search_dark);
+        colorAnimator.start();
+    }
+
 }
