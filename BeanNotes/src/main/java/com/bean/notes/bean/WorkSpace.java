@@ -34,6 +34,8 @@ public class WorkSpace {
     private int count;
     @DatabaseField(useGetSet = true, dataType = DataType.STRING)
     private String description;
+    @DatabaseField(useGetSet = true, dataType = DataType.BOOLEAN)
+    private boolean inited;
 
     public Long get_id() {
         return _id;
@@ -81,6 +83,14 @@ public class WorkSpace {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public boolean getInited() {
+        return inited;
+    }
+
+    public void setInited(boolean inited) {
+        this.inited = inited;
     }
 
     @Override

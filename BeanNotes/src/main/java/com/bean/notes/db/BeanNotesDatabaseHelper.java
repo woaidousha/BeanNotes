@@ -19,6 +19,7 @@ import com.bean.notes.bean.CheckItem;
 import com.bean.notes.bean.Media;
 import com.bean.notes.bean.Note;
 import com.bean.notes.bean.WorkSpace;
+import com.bean.notes.tools.ColorUtil;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.support.ConnectionSource;
@@ -31,6 +32,8 @@ public class BeanNotesDatabaseHelper extends OrmLiteSqliteOpenHelper {
     private static final String DATABASE_NAME = "notes.db";
     private static final int VERSION = 1;
 
+    private static BeanNotesDatabaseHelper sInstance;
+
     private Dao<WorkSpace, Long> mWorkSpaceDao;
 
     public BeanNotesDatabaseHelper(Context context) {
@@ -41,6 +44,13 @@ public class BeanNotesDatabaseHelper extends OrmLiteSqliteOpenHelper {
         this(BeanNotesApp.getInstance());
     }
 
+    public static BeanNotesDatabaseHelper getInstance() {
+        if (sInstance == null) {
+            sInstance = new BeanNotesDatabaseHelper(BeanNotesApp.getInstance());
+        }
+        return sInstance;
+    }
+
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase, ConnectionSource connectionSource) {
         try {
@@ -48,6 +58,7 @@ public class BeanNotesDatabaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.createTable(connectionSource, Note.class);
             TableUtils.createTable(connectionSource, CheckItem.class);
             TableUtils.createTable(connectionSource, Media.class);
+            initFirstLaunchData();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -55,6 +66,21 @@ public class BeanNotesDatabaseHelper extends OrmLiteSqliteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, ConnectionSource connectionSource, int i, int i2) {
+    }
+
+    private void initFirstLaunchData() throws SQLException {
+        WorkSpace workSpace = new WorkSpace();
+        workSpace.setColor(ColorUtil.COLOR_BASE_0);
+        workSpace.setCount(0);
+        workSpace.setInited(true);
+        workSpace.setName("My Ideas");
+        getWorkSpaceDao().createIfNotExists(workSpace);
+        workSpace = new WorkSpace();
+        workSpace.setColor(ColorUtil.COLOR_BASE_1);
+        workSpace.setCount(0);
+        workSpace.setInited(true);
+        workSpace.setName("Local Connection");
+        getWorkSpaceDao().createIfNotExists(workSpace);
     }
 
     public Dao<WorkSpace, Long> getWorkSpaceDao() throws SQLException {

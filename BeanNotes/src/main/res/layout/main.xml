@@ -12,7 +12,7 @@
         android:layout_height="match_parent"
         android:layout_marginBottom="@dimen/operator_bar_height"
         android:layout_alignParentTop="true"
-        android:background="@color/abs__bright_foreground_disabled_holo_dark">
+        android:background="@color/fragment_comment_bg">
     </FrameLayout>
 
     <LinearLayout

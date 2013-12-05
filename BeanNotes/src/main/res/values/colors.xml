@@ -2,10 +2,31 @@
 <resources>
     <color name="action_bar_title">#FFFFFFFF</color>
 
+    <color name="fragment_comment_bg">#ffd0d0d0</color>
+
     <color name="content_shadow">#55000000</color>
     <color name="wheel_expend_bg">#fff2f2f2</color>
     <color name="bottom_bar_bg">#fff2f2f2</color>
     <color name="expend_menu_selected_bg">#80e7a846</color>
     <color name="bottom_bar_item_pressed_background">#26000000</color>
     <color name="bottom_bar_item_focused_background">#1a000000</color>
+
+    <color name="workspace_list_cell_background_base_0_fill_focused">#4ce7a846</color>
+    <color name="workspace_list_cell_background_base_0_fill_pressed">#80e7a846</color>
+    <color name="workspace_list_cell_background_base_1_fill_focused">#4c5fbf88</color>
+    <color name="workspace_list_cell_background_base_1_fill_pressed">#805fbf88</color>
+    <color name="workspace_list_cell_background_base_2_fill_focused">#4c1aa4b4</color>
+    <color name="workspace_list_cell_background_base_2_fill_pressed">#801aa4b4</color>
+    <color name="workspace_list_cell_background_base_3_fill_focused">#4c6664a8</color>
+    <color name="workspace_list_cell_background_base_3_fill_pressed">#806664a8</color>
+    <color name="workspace_list_cell_background_base_4_fill_focused">#4c993c99</color>
+    <color name="workspace_list_cell_background_base_4_fill_pressed">#80993c99</color>
+    <color name="workspace_list_cell_background_base_5_fill_focused">#4c656565</color>
+    <color name="workspace_list_cell_background_base_5_fill_pressed">#80656565</color>
+    <color name="workspace_list_cell_background_all_fill_focused">#4ca9a9a9</color>
+    <color name="workspace_list_cell_background_all_fill_pressed">#80a9a9a9</color>
+
+    <color name="workspace_item_name">#FFFFFFFF</color>
+    <color name="workspace_item_description">#b3ffffff</color>
+    <color name="workspace_item_text_shadow">#4c000000</color>
 </resources>

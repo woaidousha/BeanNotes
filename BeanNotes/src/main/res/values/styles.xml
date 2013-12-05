@@ -11,4 +11,12 @@
         <item name="android:clickable">true</item>
     </style>
 
+    <style name="WorkSpace_Item_Text">
+        <item name="android:shadowColor">@color/workspace_item_text_shadow</item>
+        <item name="android:shadowDx">0</item>
+        <item name="android:shadowDy">-1</item>
+        <item name="android:shadowRadius">1</item>
+        <item name="android:singleLine">true</item>
+    </style>
+
 </resources>
