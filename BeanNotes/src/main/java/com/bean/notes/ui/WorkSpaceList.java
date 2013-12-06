@@ -16,10 +16,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.*;
 import com.bean.notes.R;
 import com.bean.notes.bean.WorkSpace;
 import com.bean.notes.db.BeanNotesDatabaseHelper;
@@ -28,7 +25,7 @@ import com.bean.notes.tools.ColorUtil;
 import java.sql.SQLException;
 import java.util.List;
 
-public class WorkSpaceList extends BaseIndexFragment {
+public class WorkSpaceList extends BaseIndexFragment implements AdapterView.OnItemClickListener {
 
     private ListView mWorkSpaceListView;
     private List<WorkSpace> mWorkSpaces;
@@ -42,6 +39,7 @@ public class WorkSpaceList extends BaseIndexFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         mWorkSpaceListView = (ListView) view.findViewById(R.id.workspace_list);
+        mWorkSpaceListView.setOnItemClickListener(this);
         mAdapter = new WorkSpaceAdapter();
         try {
             mWorkSpaces = BeanNotesDatabaseHelper.getInstance().getWorkSpaceDao().queryForAll();
@@ -58,8 +56,14 @@ public class WorkSpaceList extends BaseIndexFragment {
 
     @Override
     public void onClick(View v) {
+
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        WorkSpace workSpace = (WorkSpace) mAdapter.getItem(position);
         if (mSwitchFragmentListener != null) {
-            mSwitchFragmentListener.switchFragment(true);
+            mSwitchFragmentListener.switchFragment(true, workSpace);
         }
     }
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="action_bar_title">#FFFFFFFF</color>
+    <color name="action_bar_title">#ffc2c2c2</color>
 
     <color name="fragment_comment_bg">#ffd0d0d0</color>
 
@@ -11,22 +11,40 @@
     <color name="bottom_bar_item_pressed_background">#26000000</color>
     <color name="bottom_bar_item_focused_background">#1a000000</color>
 
-    <color name="workspace_list_cell_background_base_0_fill_focused">#4ce7a846</color>
-    <color name="workspace_list_cell_background_base_0_fill_pressed">#80e7a846</color>
-    <color name="workspace_list_cell_background_base_1_fill_focused">#4c5fbf88</color>
-    <color name="workspace_list_cell_background_base_1_fill_pressed">#805fbf88</color>
-    <color name="workspace_list_cell_background_base_2_fill_focused">#4c1aa4b4</color>
-    <color name="workspace_list_cell_background_base_2_fill_pressed">#801aa4b4</color>
-    <color name="workspace_list_cell_background_base_3_fill_focused">#4c6664a8</color>
-    <color name="workspace_list_cell_background_base_3_fill_pressed">#806664a8</color>
-    <color name="workspace_list_cell_background_base_4_fill_focused">#4c993c99</color>
-    <color name="workspace_list_cell_background_base_4_fill_pressed">#80993c99</color>
-    <color name="workspace_list_cell_background_base_5_fill_focused">#4c656565</color>
-    <color name="workspace_list_cell_background_base_5_fill_pressed">#80656565</color>
-    <color name="workspace_list_cell_background_all_fill_focused">#4ca9a9a9</color>
-    <color name="workspace_list_cell_background_all_fill_pressed">#80a9a9a9</color>
+    <color name="workspace_list_item_bg_base_0_fill_focused">#4ce7a846</color>
+    <color name="workspace_list_item_bg_base_0_fill_pressed">#80e7a846</color>
+    <color name="workspace_list_item_bg_base_0_gradient_start">#ffe7a846</color>
+    <color name="workspace_list_item_bg_base_0_gradient_end">#ffc38e3b</color>
+    <color name="workspace_list_item_bg_base_1_fill_focused">#4c5fbf88</color>
+    <color name="workspace_list_item_bg_base_1_fill_pressed">#805fbf88</color>
+    <color name="workspace_list_item_bg_base_1_gradient_start">#ff5fbf88</color>
+    <color name="workspace_list_item_bg_base_1_gradient_end">#ff4fa072</color>
+    <color name="workspace_list_item_bg_base_2_fill_focused">#4c1aa4b4</color>
+    <color name="workspace_list_item_bg_base_2_fill_pressed">#801aa4b4</color>
+    <color name="workspace_list_item_bg_base_2_gradient_start">#ff1aa3b3</color>
+    <color name="workspace_list_item_bg_base_2_gradient_end">#ff138796</color>
+    <color name="workspace_list_item_bg_base_3_fill_focused">#4c6664a8</color>
+    <color name="workspace_list_item_bg_base_3_fill_pressed">#806664a8</color>
+    <color name="workspace_list_item_bg_base_3_gradient_start">#ff6664a7</color>
+    <color name="workspace_list_item_bg_base_3_gradient_end">#ff54528a</color>
+    <color name="workspace_list_item_bg_base_4_fill_focused">#4c993c99</color>
+    <color name="workspace_list_item_bg_base_4_fill_pressed">#80993c99</color>
+    <color name="workspace_list_item_bg_base_4_gradient_start">#ff983c98</color>
+    <color name="workspace_list_item_bg_base_4_gradient_end">#ff813381</color>
+    <color name="workspace_list_item_bg_base_5_fill_focused">#4c656565</color>
+    <color name="workspace_list_item_bg_base_5_fill_pressed">#80656565</color>
+    <color name="workspace_list_item_bg_base_5_gradient_start">#ff717171</color>
+    <color name="workspace_list_item_bg_base_5_gradient_end">#ff525252</color>
+    <color name="workspace_list_item_bg_all_fill_focused">#4ca9a9a9</color>
+    <color name="workspace_list_item_bg_all_fill_pressed">#80a9a9a9</color>
+    <color name="workspace_all_notes_gradient_start">#ffa8a8a8</color>
+    <color name="workspace_all_notes_gradient_end">#ff858585</color>
+
+    <color name="workspace_create_space_gradient_start">#ffd7d7d7</color>
+    <color name="workspace_create_space_gradient_end">#ffc2c2c2</color>
 
     <color name="workspace_item_name">#FFFFFFFF</color>
     <color name="workspace_item_description">#b3ffffff</color>
+    <color name="workspace_item_count">#FFffffff</color>
     <color name="workspace_item_text_shadow">#4c000000</color>
 </resources>

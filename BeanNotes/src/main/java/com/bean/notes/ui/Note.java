@@ -46,7 +46,7 @@ public class Note extends BaseIndexFragment {
         int viewId = v.getId();
         if (viewId == R.id.text_view) {
             if (mSwitchFragmentListener != null) {
-                mSwitchFragmentListener.switchFragment(false);
+                mSwitchFragmentListener.switchFragment(false, null);
             }
         } else if (viewId == R.id.bottom_bar_attach) {
         } else if (viewId == R.id.bottom_bar_share) {

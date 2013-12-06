@@ -12,12 +12,14 @@
 */
 package com.bean.notes.bean;
 
+import com.bean.notes.tools.ColorUtil;
+import com.bean.notes.ui.Switchable;
 import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable(tableName = "workspace")
-public class WorkSpace {
+public class WorkSpace implements Switchable{
 
     public WorkSpace() {
     }
@@ -103,5 +105,20 @@ public class WorkSpace {
                 ", count=" + count +
                 ", description='" + description + '\'' +
                 '}';
+    }
+
+    @Override
+    public long getContentId() {
+        return _id;
+    }
+
+    @Override
+    public String getTitle() {
+        return name;
+    }
+
+    @Override
+    public Integer getActivityColor() {
+        return ColorUtil.getActionBarAndBottomBg(color);
     }
 }

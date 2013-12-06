@@ -40,7 +40,7 @@ public class NoteList extends BaseIndexFragment {
     @Override
     public void onClick(View v) {
         if (mSwitchFragmentListener != null) {
-            mSwitchFragmentListener.switchFragment(true);
+            mSwitchFragmentListener.switchFragment(true, null);
         }
     }
 }

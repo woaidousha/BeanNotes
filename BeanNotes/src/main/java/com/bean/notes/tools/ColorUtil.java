@@ -26,50 +26,50 @@ public class ColorUtil {
     public static final int COLOR_BASE_ALL = 6;
 
     public static int getWorkSpaceCellSelector(int colorBase) {
-        int selectorRes = R.drawable.workspace_list_cell_base_0_selector;
+        int selectorRes = R.drawable.workspace_list_item_base_0_selector;
         switch (colorBase) {
             case COLOR_BASE_1:
-                selectorRes = R.drawable.workspace_list_cell_base_1_selector;
+                selectorRes = R.drawable.workspace_list_item_base_1_selector;
                 break;
             case COLOR_BASE_2:
-                selectorRes = R.drawable.workspace_list_cell_base_2_selector;
+                selectorRes = R.drawable.workspace_list_item_base_2_selector;
                 break;
             case COLOR_BASE_3:
-                selectorRes = R.drawable.workspace_list_cell_base_3_selector;
+                selectorRes = R.drawable.workspace_list_item_base_3_selector;
                 break;
             case COLOR_BASE_4:
-                selectorRes = R.drawable.workspace_list_cell_base_4_selector;
+                selectorRes = R.drawable.workspace_list_item_base_4_selector;
                 break;
             case COLOR_BASE_5:
-                selectorRes = R.drawable.workspace_list_cell_base_5_selector;
+                selectorRes = R.drawable.workspace_list_item_base_5_selector;
                 break;
             case COLOR_BASE_ALL:
-                selectorRes = R.drawable.workspace_list_cell_all_selector;
+                selectorRes = R.drawable.workspace_list_item_all_selector;
                 break;
         }
         return selectorRes;
     }
 
     public static int getActionBarAndBottomBg(int colorBase) {
-        int colorRes = R.color.workspace_list_cell_background_base_0_fill_focused;
+        int colorRes = R.color.workspace_list_item_bg_base_0_gradient_start;
         switch (colorBase) {
             case COLOR_BASE_1:
-                colorRes = R.color.workspace_list_cell_background_base_1_fill_focused;
+                colorRes = R.color.workspace_list_item_bg_base_1_gradient_start;
                 break;
             case COLOR_BASE_2:
-                colorRes = R.color.workspace_list_cell_background_base_2_fill_focused;
+                colorRes = R.color.workspace_list_item_bg_base_2_gradient_start;
                 break;
             case COLOR_BASE_3:
-                colorRes = R.color.workspace_list_cell_background_base_3_fill_focused;
+                colorRes = R.color.workspace_list_item_bg_base_3_gradient_start;
                 break;
             case COLOR_BASE_4:
-                colorRes = R.color.workspace_list_cell_background_base_4_fill_focused;
+                colorRes = R.color.workspace_list_item_bg_base_4_gradient_start;
                 break;
             case COLOR_BASE_5:
-                colorRes = R.color.workspace_list_cell_background_base_5_fill_focused;
+                colorRes = R.color.workspace_list_item_bg_base_5_gradient_start;
                 break;
             case COLOR_BASE_ALL:
-                colorRes = R.color.workspace_list_cell_background_all_fill_focused;
+                colorRes = R.color.workspace_all_notes_gradient_start;
                 break;
         }
         return BeanNotesApp.getInstance().getResources().getColor(colorRes);

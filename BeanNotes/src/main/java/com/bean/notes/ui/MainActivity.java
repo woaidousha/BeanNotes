@@ -14,7 +14,6 @@ package com.bean.notes.ui;
 
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -42,8 +41,10 @@ public class MainActivity extends SherlockFragmentActivity implements OperatorBa
     private int mCurrentFragment;
     private boolean mSearchMode;
     private int mActionAndBottomBg;
+    private int mLastmActionAndBottomBg;
     private boolean mColorMode;
     private String mTitle;
+    private long mCurrentId = -1;
     private boolean mFirstLaunch = true;
 
     private FragmentManager mFragmentManager;
@@ -169,6 +170,7 @@ public class MainActivity extends SherlockFragmentActivity implements OperatorBa
         ActionBar actionBar = getSupportActionBar();
         boolean homeAsUpEnable = false;
         if (mCurrentFragment == getWorkSpaceList().getFragmentIndex()) {
+            mCurrentId = -1;
             transaction.show(getWorkSpaceList());
             transaction.hide(getNoteList());
             transaction.hide(getNote());
@@ -190,8 +192,16 @@ public class MainActivity extends SherlockFragmentActivity implements OperatorBa
     }
 
     @Override
-    public void switchFragment(boolean next) {
+    public void switchFragment(boolean next, Switchable switchable) {
         mCurrentFragment = next ? mCurrentFragment + 1 : mCurrentFragment - 1;
+        if (switchable != null) {
+            if (switchable.getActivityColor() != null) {
+                mLastmActionAndBottomBg = mActionAndBottomBg;
+                mActionAndBottomBg = switchable.getActivityColor();
+            }
+            mTitle = switchable.getTitle();
+            mCurrentId = switchable.getContentId();
+        }
         switchFragment();
     }
 
@@ -265,7 +275,7 @@ public class MainActivity extends SherlockFragmentActivity implements OperatorBa
             }
             return;
         }
-        switchFragment(false);
+        switchFragment(false, null);
     }
 
     private void toggleBottomBar() {
@@ -330,10 +340,8 @@ public class MainActivity extends SherlockFragmentActivity implements OperatorBa
         if (mColorMode == colorMode) {
             return;
         }
-        int lastColor = mActionAndBottomBg;
-        //TODO: change the blue to workspace color
-        mActionAndBottomBg = mColorMode ? Color.BLUE : getResources().getColor(R.color.bottom_bar_bg);
-        ValueAnimator colorAnimator = ValueAnimator.ofObject(new ArgbEvaluator(), lastColor, mActionAndBottomBg);
+        mActionAndBottomBg = mColorMode ? mActionAndBottomBg : getResources().getColor(R.color.action_bar_title);
+        ValueAnimator colorAnimator = ValueAnimator.ofObject(new ArgbEvaluator(), mLastmActionAndBottomBg, mActionAndBottomBg);
         colorAnimator.setDuration(AnimationUtil.ACTION_BOTTOM_BAR_DURATION);
         colorAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override

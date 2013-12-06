@@ -12,6 +12,7 @@
 */
 package com.bean.notes.bean;
 
+import com.bean.notes.ui.Switchable;
 import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
@@ -19,7 +20,7 @@ import com.j256.ormlite.table.DatabaseTable;
 import java.util.Date;
 
 @DatabaseTable(tableName = "notes")
-public class Note {
+public class Note implements Switchable {
 
     public Note() {
     }
@@ -103,5 +104,20 @@ public class Note {
 
     public void setLongitude(double longitude) {
         this.longitude = longitude;
+    }
+
+    @Override
+    public long getContentId() {
+        return _id;
+    }
+
+    @Override
+    public String getTitle() {
+        return name;
+    }
+
+    @Override
+    public Integer getActivityColor() {
+        return null;
     }
 }

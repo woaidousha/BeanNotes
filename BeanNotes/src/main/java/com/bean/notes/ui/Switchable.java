@@ -12,8 +12,11 @@
 */
 package com.bean.notes.ui;
 
-public interface ISwitchFragment {
+public interface Switchable {
 
-    public void switchFragment(boolean next, Switchable switchable);
+    public long getContentId();
 
+    public String getTitle();
+
+    public Integer getActivityColor();
 }
