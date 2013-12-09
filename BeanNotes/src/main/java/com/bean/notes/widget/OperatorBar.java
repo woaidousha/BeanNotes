@@ -84,15 +84,15 @@ public class OperatorBar extends RelativeLayout implements View.OnClickListener,
         mWheelBg.setVisibility(selected ? View.VISIBLE : View.GONE);
         mExpendMenu.setVisibility(selected ? View.VISIBLE : View.GONE);
 
-        Animation animation = AnimationUtils.loadAnimation(getContext(), isClosed() ? R.anim.pop_in_fast : R.anim.pop_away);
+        Animation animation = AnimationUtils.loadAnimation(getContext(), isClosed() ? R.anim.pop_away : R.anim.pop_in_fast);
         mWheelColors.startAnimation(animation);
         mWheelBg.startAnimation(animation);
-        Animation animationMenu = AnimationUtils.loadAnimation(getContext(), isClosed() ? R.anim.pop_in_fast_menu : R.anim.pop_away_menu);
+        Animation animationMenu = AnimationUtils.loadAnimation(getContext(), isClosed() ? R.anim.pop_away_menu : R.anim.pop_in_fast_menu);
         mExpendMenu.startAnimation(animationMenu);
     }
 
     public boolean isClosed() {
-        return mBtnCapture.isSelected();
+        return !mBtnCapture.isSelected();
     }
 
     @Override
@@ -109,5 +109,10 @@ public class OperatorBar extends RelativeLayout implements View.OnClickListener,
             mCaptureBgDrawable.setColor(color);
             mBtnCaptureBg.invalidate();
         }
+    }
+
+    public void close() {
+        mBtnCapture.setSelected(false);
+        refreshWheelViews();
     }
 }

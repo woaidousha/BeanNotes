@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="action_bar_title">#ffc2c2c2</color>
+    <color name="action_bar_title">#ffffffff</color>
 
     <color name="fragment_comment_bg">#ffd0d0d0</color>
 

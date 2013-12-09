@@ -21,6 +21,7 @@ import android.os.Message;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.TranslateAnimation;
@@ -194,9 +195,9 @@ public class MainActivity extends SherlockFragmentActivity implements OperatorBa
     @Override
     public void switchFragment(boolean next, Switchable switchable) {
         mCurrentFragment = next ? mCurrentFragment + 1 : mCurrentFragment - 1;
+        mLastmActionAndBottomBg = mActionAndBottomBg;
         if (switchable != null) {
             if (switchable.getActivityColor() != null) {
-                mLastmActionAndBottomBg = mActionAndBottomBg;
                 mActionAndBottomBg = switchable.getActivityColor();
             }
             mTitle = switchable.getTitle();
@@ -254,7 +255,11 @@ public class MainActivity extends SherlockFragmentActivity implements OperatorBa
 
     @Override
     public void onBackPressed() {
-        onBackUI(true);
+        if (!mOperatorBar.isClosed()) {
+            mOperatorBar.close();
+        } else {
+            onBackUI(true);
+        }
     }
 
     @Override
@@ -337,10 +342,11 @@ public class MainActivity extends SherlockFragmentActivity implements OperatorBa
             mHandler.sendMessage(msg);
             return;
         }
-        if (mColorMode == colorMode) {
+        mActionAndBottomBg = mColorMode ? mActionAndBottomBg : getResources().getColor(R.color.action_bar_title);
+        if (mColorMode == colorMode
+            && mLastmActionAndBottomBg == mActionAndBottomBg) {
             return;
         }
-        mActionAndBottomBg = mColorMode ? mActionAndBottomBg : getResources().getColor(R.color.action_bar_title);
         ValueAnimator colorAnimator = ValueAnimator.ofObject(new ArgbEvaluator(), mLastmActionAndBottomBg, mActionAndBottomBg);
         colorAnimator.setDuration(AnimationUtil.ACTION_BOTTOM_BAR_DURATION);
         colorAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -354,6 +360,7 @@ public class MainActivity extends SherlockFragmentActivity implements OperatorBa
         });
         mMenuItemSearch.setImageResource(mColorMode ? R.drawable.ic_search : R.drawable.ic_search_dark);
         colorAnimator.start();
+        colorAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
     }
 
 }
