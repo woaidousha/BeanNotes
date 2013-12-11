@@ -12,6 +12,7 @@
 */
 package com.bean.notes.ui;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,13 +41,18 @@ public class WorkSpaceList extends BaseIndexFragment implements AdapterView.OnIt
     public void onViewCreated(View view, Bundle savedInstanceState) {
         mWorkSpaceListView = (ListView) view.findViewById(R.id.workspace_list);
         mWorkSpaceListView.setOnItemClickListener(this);
+        mWorkSpaceListView.setAdapter(mAdapter);
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
         mAdapter = new WorkSpaceAdapter();
         try {
             mWorkSpaces = BeanNotesDatabaseHelper.getInstance().getWorkSpaceDao().queryForAll();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        mWorkSpaceListView.setAdapter(mAdapter);
     }
 
     @Override

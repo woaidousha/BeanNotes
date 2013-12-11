@@ -34,8 +34,11 @@ import com.bean.notes.tools.AnimationUtil;
 import com.bean.notes.widget.OperatorBar;
 
 import static com.bean.notes.tools.Constant.OperatorMenu.*;
+import static com.bean.notes.ui.BaseIndexFragment.FM_INDEX_NOTE;
+import static com.bean.notes.ui.BaseIndexFragment.FM_INDEX_NOTELIST;
+import static com.bean.notes.ui.BaseIndexFragment.FM_INDEX_WORKSPACE;
 
-public class MainActivity extends SherlockFragmentActivity implements OperatorBar.OnOperatorItemClickListener, View.OnClickListener, ISwitchFragment {
+public class MainActivity extends SherlockFragmentActivity implements OperatorBar.OnOperatorItemClickListener, View.OnClickListener, ISwitchFragmentListener {
 
     private static final int MSG_UPDATE_COLOR = 0;
 
@@ -153,38 +156,40 @@ public class MainActivity extends SherlockFragmentActivity implements OperatorBa
 
     private void initFragments() {
         mFragmentManager = getSupportFragmentManager();
-        mCurrentFragment = BaseIndexFragment.FM_INDEX_WORKSPACE;
+        mCurrentFragment = FM_INDEX_WORKSPACE;
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
-        transaction.add(R.id.fragment_container, getWorkSpaceList(), WorkSpaceList.class.getSimpleName());
-        transaction.add(R.id.fragment_container, getNoteList(), NoteList.class.getSimpleName());
-        transaction.add(R.id.fragment_container, getNote(), Note.class.getSimpleName());
-        transaction.hide(getWorkSpaceList());
-        transaction.hide(getNoteList());
-        transaction.hide(getNote());
+        transaction.replace(R.id.fragment_container, getWorkSpaceList());
         transaction.commit();
-        switchFragment();
         mFirstLaunch = false;
     }
 
-    private void switchFragment() {
+    private void doSwitchFragment(Switchable switchable, boolean next) {
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
         ActionBar actionBar = getSupportActionBar();
         boolean homeAsUpEnable = false;
-        if (mCurrentFragment == getWorkSpaceList().getFragmentIndex()) {
-            mCurrentId = -1;
-            transaction.show(getWorkSpaceList());
-            transaction.hide(getNoteList());
-            transaction.hide(getNote());
-        } else if (mCurrentFragment == getNoteList().getFragmentIndex()) {
-            transaction.hide(getWorkSpaceList());
-            transaction.show(getNoteList());
-            transaction.hide(getNote());
-            homeAsUpEnable = true;
-        } else if (mCurrentFragment == getNote().getFragmentIndex()) {
-            transaction.hide(getWorkSpaceList());
-            transaction.hide(getNoteList());
-            transaction.show(getNote());
-            homeAsUpEnable = true;
+        if (next) {
+            if (mCurrentFragment == FM_INDEX_WORKSPACE) {
+                mCurrentId = -1;
+                transaction.replace(R.id.fragment_container, getWorkSpaceList());
+            } else if (mCurrentFragment == FM_INDEX_NOTELIST) {
+                NoteList noteList = getNoteList();
+                transaction.replace(R.id.fragment_container, noteList);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(BaseIndexFragment.ARGV_SWITCHABLE, switchable);
+                noteList.setArguments(bundle);
+                transaction.addToBackStack(null);
+                homeAsUpEnable = true;
+            } else if (mCurrentFragment == FM_INDEX_NOTE) {
+                Note note = getNote();
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("switchable", switchable);
+                note.setArguments(bundle);
+                transaction.replace(R.id.fragment_container, note);
+                transaction.addToBackStack(null);
+                homeAsUpEnable = true;
+            }
+        } else {
+            getSupportFragmentManager().popBackStack();
         }
         actionBar.setDisplayHomeAsUpEnabled(homeAsUpEnable);
         transaction.commit();
@@ -203,13 +208,13 @@ public class MainActivity extends SherlockFragmentActivity implements OperatorBa
             mTitle = switchable.getTitle();
             mCurrentId = switchable.getContentId();
         }
-        switchFragment();
+        doSwitchFragment(switchable, next);
     }
 
     private WorkSpaceList getWorkSpaceList() {
         if (mWorkSpaceList == null) {
             mWorkSpaceList = new WorkSpaceList();
-            mWorkSpaceList.setSwitchFragment(this);
+            mWorkSpaceList.setSwitchFragmentListener(this);
         }
         return mWorkSpaceList;
     }
@@ -217,7 +222,7 @@ public class MainActivity extends SherlockFragmentActivity implements OperatorBa
     public NoteList getNoteList() {
         if (mNoteList == null) {
             mNoteList = new NoteList();
-            mNoteList.setSwitchFragment(this);
+            mNoteList.setSwitchFragmentListener(this);
         }
         return mNoteList;
     }
@@ -225,7 +230,7 @@ public class MainActivity extends SherlockFragmentActivity implements OperatorBa
     public Note getNote() {
         if (mNote == null) {
             mNote = new Note();
-            mNote.setSwitchFragment(this);
+            mNote.setSwitchFragmentListener(this);
             mMenuItemListener = new MenuItemListener();
             mNote.setMenuItemStateListener(mMenuItemListener);
         }
@@ -274,7 +279,7 @@ public class MainActivity extends SherlockFragmentActivity implements OperatorBa
     }
 
     private void onBackUI(boolean needFinish) {
-        if (mCurrentFragment == BaseIndexFragment.FM_INDEX_WORKSPACE) {
+        if (mCurrentFragment == FM_INDEX_WORKSPACE) {
             if (needFinish) {
                 super.onBackPressed();
             }
@@ -285,7 +290,7 @@ public class MainActivity extends SherlockFragmentActivity implements OperatorBa
 
     private void toggleBottomBar() {
         boolean searchMode = mSearchMode;
-        mSearchMode = mCurrentFragment != BaseIndexFragment.FM_INDEX_NOTE;
+        mSearchMode = mCurrentFragment != FM_INDEX_NOTE;
         if (!mFirstLaunch && mSearchMode == searchMode) {
             return;
         }
@@ -335,7 +340,7 @@ public class MainActivity extends SherlockFragmentActivity implements OperatorBa
 
     private void switchActionAndMenuBg() {
         boolean colorMode = mColorMode;
-        mColorMode = mCurrentFragment != BaseIndexFragment.FM_INDEX_WORKSPACE;
+        mColorMode = mCurrentFragment != FM_INDEX_WORKSPACE;
         if (mFirstLaunch) {
             mHandler.removeMessages(MSG_UPDATE_COLOR);
             Message msg = mHandler.obtainMessage(MSG_UPDATE_COLOR, mActionAndBottomBg, 0);

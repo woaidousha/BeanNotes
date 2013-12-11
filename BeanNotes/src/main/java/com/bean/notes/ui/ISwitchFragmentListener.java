@@ -12,7 +12,7 @@
 */
 package com.bean.notes.ui;
 
-public interface ISwitchFragment {
+public interface ISwitchFragmentListener {
 
     public void switchFragment(boolean next, Switchable switchable);
 

@@ -22,24 +22,33 @@ import java.util.Date;
 @DatabaseTable(tableName = "notes")
 public class Note implements Switchable {
 
+    public static final String COLUMN_ID = "_id";
+    public static final String COLUMN_PARENT_ID = "parent_id";
+    public static final String COLUMN_NAME = "name";
+    public static final String COLUMN_CREATE_TIME = "createTime";
+    public static final String COLUMN_REMINDER = "reminder";
+    public static final String COLUMN_TEXT = "text";
+    public static final String COLUMN_LATITUDE = "latitude";
+    public static final String COLUMN_LONGITUDE = "longitude";
+
     public Note() {
     }
 
-    @DatabaseField(generatedId = true, useGetSet = true)
+    @DatabaseField(generatedId = true, useGetSet = true, columnName = COLUMN_ID)
     private long _id;
-    @DatabaseField(useGetSet = true, dataType = DataType.LONG)
+    @DatabaseField(useGetSet = true, dataType = DataType.LONG, columnName = COLUMN_PARENT_ID)
     private long parent_id;
-    @DatabaseField(useGetSet = true, dataType = DataType.STRING)
+    @DatabaseField(useGetSet = true, dataType = DataType.STRING, columnName = COLUMN_NAME)
     private String name;
-    @DatabaseField(useGetSet = true, dataType = DataType.DATE_LONG)
+    @DatabaseField(useGetSet = true, dataType = DataType.DATE_LONG, columnName = COLUMN_CREATE_TIME)
     private Date createTime;
-    @DatabaseField(useGetSet = true, dataType = DataType.BOOLEAN)
+    @DatabaseField(useGetSet = true, dataType = DataType.BOOLEAN, columnName = COLUMN_REMINDER)
     private boolean reminder;
-    @DatabaseField(useGetSet = true, dataType = DataType.STRING)
+    @DatabaseField(useGetSet = true, dataType = DataType.STRING, columnName = COLUMN_TEXT)
     private String text;
-    @DatabaseField(useGetSet = true, dataType = DataType.DOUBLE)
+    @DatabaseField(useGetSet = true, dataType = DataType.DOUBLE, columnName = COLUMN_LATITUDE)
     private double latitude;
-    @DatabaseField(useGetSet = true, dataType = DataType.DOUBLE)
+    @DatabaseField(useGetSet = true, dataType = DataType.DOUBLE, columnName = COLUMN_LONGITUDE)
     private double longitude;
 
     public long get_id() {
@@ -119,5 +128,19 @@ public class Note implements Switchable {
     @Override
     public Integer getActivityColor() {
         return null;
+    }
+
+    @Override
+    public String toString() {
+        return "Note{" +
+                "_id=" + _id +
+                ", parent_id=" + parent_id +
+                ", name='" + name + '\'' +
+                ", createTime=" + createTime +
+                ", reminder=" + reminder +
+                ", text='" + text + '\'' +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
+                '}';
     }
 }

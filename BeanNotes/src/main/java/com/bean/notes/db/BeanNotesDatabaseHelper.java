@@ -26,6 +26,7 @@ import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 
 import java.sql.SQLException;
+import java.util.Date;
 
 public class BeanNotesDatabaseHelper extends OrmLiteSqliteOpenHelper {
 
@@ -35,6 +36,7 @@ public class BeanNotesDatabaseHelper extends OrmLiteSqliteOpenHelper {
     private static BeanNotesDatabaseHelper sInstance;
 
     private Dao<WorkSpace, Long> mWorkSpaceDao;
+    private Dao<Note, Long> mNoteListDao;
 
     public BeanNotesDatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, VERSION);
@@ -74,13 +76,34 @@ public class BeanNotesDatabaseHelper extends OrmLiteSqliteOpenHelper {
         workSpace.setCount(0);
         workSpace.setInited(true);
         workSpace.setName("My Ideas");
-        getWorkSpaceDao().createIfNotExists(workSpace);
+        workSpace = getWorkSpaceDao().createIfNotExists(workSpace);
+        Note note = new Note();
+        note.setParent_id(workSpace.get_id());
+        note.setName("Note1");
+        note.setReminder(false);
+        note.setText("This is my first note");
+        note.setCreateTime(new Date(System.currentTimeMillis()));
+        getNoteListDao().createIfNotExists(note);
+        note = new Note();
+        note.setParent_id(workSpace.get_id());
+        note.setName("Note1.1");
+        note.setReminder(false);
+        note.setText("This is my note1.1");
+        note.setCreateTime(new Date(System.currentTimeMillis()));
+        getNoteListDao().createIfNotExists(note);
         workSpace = new WorkSpace();
         workSpace.setColor(ColorUtil.COLOR_BASE_1);
         workSpace.setCount(0);
         workSpace.setInited(true);
         workSpace.setName("Local Connection");
-        getWorkSpaceDao().createIfNotExists(workSpace);
+        workSpace = getWorkSpaceDao().createIfNotExists(workSpace);
+        note = new Note();
+        note.setParent_id(workSpace.get_id());
+        note.setName("Note2");
+        note.setReminder(false);
+        note.setText("This is my second note");
+        note.setCreateTime(new Date(System.currentTimeMillis()));
+        getNoteListDao().createIfNotExists(note);
     }
 
     public Dao<WorkSpace, Long> getWorkSpaceDao() throws SQLException {
@@ -88,5 +111,12 @@ public class BeanNotesDatabaseHelper extends OrmLiteSqliteOpenHelper {
             mWorkSpaceDao = getDao(WorkSpace.class);
         }
         return mWorkSpaceDao;
+    }
+
+    public Dao<Note, Long> getNoteListDao() throws SQLException {
+        if (mNoteListDao == null) {
+            mNoteListDao = getDao(Note.class);
+        }
+        return mNoteListDao;
     }
 }

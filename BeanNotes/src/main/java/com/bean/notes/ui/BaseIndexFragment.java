@@ -17,20 +17,31 @@ import com.actionbarsherlock.app.SherlockFragment;
 
 public abstract class BaseIndexFragment extends SherlockFragment implements View.OnClickListener {
 
+    public static final String ARGV_SWITCHABLE = "switchable";
+
     protected static final int FM_INDEX_WORKSPACE   = 0;
     protected static final int FM_INDEX_NOTELIST    = 1;
     protected static final int FM_INDEX_NOTE        = 2;
 
-    protected ISwitchFragment mSwitchFragmentListener;
+    protected ISwitchFragmentListener mSwitchFragmentListener;
+
+    protected Switchable mParentSwitchable;
 
     protected abstract int getFragmentIndex();
 
-    protected void setSwitchFragment(ISwitchFragment switchFragment) {
+    protected void setSwitchFragmentListener(ISwitchFragmentListener switchFragment) {
         this.mSwitchFragmentListener = switchFragment;
     }
 
-    public ISwitchFragment getSwitchFragment() {
+    public ISwitchFragmentListener getSwitchFragment() {
         return mSwitchFragmentListener;
     }
 
+    public Switchable getSwitchable() {
+        return mParentSwitchable;
+    }
+
+    public void setSwitchable(Switchable switchable) {
+        this.mParentSwitchable = switchable;
+    }
 }

@@ -47,4 +47,8 @@
     <color name="workspace_item_description">#b3ffffff</color>
     <color name="workspace_item_count">#FFffffff</color>
     <color name="workspace_item_text_shadow">#4c000000</color>
+
+    <color name="notelist_background">#ffffffff</color>
+    <color name="notelist_item_primary_text">#ff555555</color>
+    <color name="notelist_item_secondary_text">#ff555555</color>
 </resources>

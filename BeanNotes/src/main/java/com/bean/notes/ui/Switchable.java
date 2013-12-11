@@ -12,7 +12,9 @@
 */
 package com.bean.notes.ui;
 
-public interface Switchable {
+import java.io.Serializable;
+
+public interface Switchable extends Serializable {
 
     public long getContentId();
 

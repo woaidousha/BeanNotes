@@ -12,14 +12,29 @@
 */
 package com.bean.notes.ui;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.*;
 import com.bean.notes.R;
+import com.bean.notes.bean.Note;
+import com.bean.notes.db.BeanNotesDatabaseHelper;
+import com.bean.notes.tools.LogUtil;
+import com.bean.notes.tools.TimeUtil;
 
-public class NoteList extends BaseIndexFragment {
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class NoteList extends BaseIndexFragment implements AdapterView.OnItemClickListener {
+
+    private ListView mNotesListView;
+
+    private List<Note> mNotesList;
+    private NoteListAdapter mAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -28,8 +43,29 @@ public class NoteList extends BaseIndexFragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        TextView textView = (TextView) view.findViewById(R.id.text_view);
-        textView.setOnClickListener(this);
+        mNotesListView = (ListView) view.findViewById(R.id.note_list);
+        mNotesListView.setOnItemClickListener(this);
+        mNotesListView.setAdapter(mAdapter);
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        Bundle bundle = getArguments();
+        Switchable switchable = (Switchable) bundle.get(ARGV_SWITCHABLE);
+        setSwitchable(switchable);
+        BeanNotesDatabaseHelper helper = BeanNotesDatabaseHelper.getInstance();
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put(Note.COLUMN_PARENT_ID, switchable.getContentId());
+        try {
+            mNotesList = helper.getNoteListDao().queryForFieldValues(map);
+            for (Note note : mNotesList) {
+                LogUtil.lyl("note:" + note.toString());
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        mAdapter = new NoteListAdapter();
     }
 
     @Override
@@ -42,5 +78,60 @@ public class NoteList extends BaseIndexFragment {
         if (mSwitchFragmentListener != null) {
             mSwitchFragmentListener.switchFragment(true, null);
         }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Note note = (Note) mAdapter.getItem(position);
+        if (mSwitchFragmentListener != null) {
+            mSwitchFragmentListener.switchFragment(true, note);
+        }
+    }
+
+    class NoteListAdapter extends BaseAdapter {
+        @Override
+        public int getCount() {
+            return mNotesList == null ? 0 : mNotesList.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return mNotesList.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            ViewHolder viewHolder = null;
+            if (convertView == null) {
+                convertView = LayoutInflater.from(getActivity()).inflate(R.layout.notelist_item, null);
+                viewHolder = new ViewHolder();
+                viewHolder.noteThumb = (ImageView) convertView.findViewById(R.id.note_thumb);
+                viewHolder.noteName = (TextView) convertView.findViewById(R.id.note_name);
+                viewHolder.noteDescription = (TextView) convertView.findViewById(R.id.note_description);
+                viewHolder.noteDate = (TextView) convertView.findViewById(R.id.note_date);
+                viewHolder.noteStar = (ImageView) convertView.findViewById(R.id.note_star);
+                convertView.setTag(viewHolder);
+            } else {
+                viewHolder = (ViewHolder) convertView.getTag();
+            }
+            Note note = (Note) getItem(position);
+            viewHolder.noteName.setText(note.getName());
+            viewHolder.noteDescription.setText(note.getText());
+            viewHolder.noteDate.setText(TimeUtil.formatTimeStampString(getActivity(), note.getCreateTime().getTime(), true));
+            return convertView;
+        }
+    }
+
+    static class ViewHolder {
+        ImageView noteThumb;
+        TextView noteName;
+        TextView noteDescription;
+        TextView noteDate;
+        ImageView noteStar;
     }
 }
