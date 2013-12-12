@@ -15,10 +15,7 @@ package com.bean.notes.db;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import com.bean.notes.BeanNotesApp;
-import com.bean.notes.bean.CheckItem;
-import com.bean.notes.bean.Media;
-import com.bean.notes.bean.Note;
-import com.bean.notes.bean.WorkSpace;
+import com.bean.notes.bean.*;
 import com.bean.notes.tools.ColorUtil;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
@@ -26,6 +23,7 @@ import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class BeanNotesDatabaseHelper extends OrmLiteSqliteOpenHelper {
@@ -35,8 +33,10 @@ public class BeanNotesDatabaseHelper extends OrmLiteSqliteOpenHelper {
 
     private static BeanNotesDatabaseHelper sInstance;
 
-    private Dao<WorkSpace, Long> mWorkSpaceDao;
-    private Dao<Note, Long> mNoteListDao;
+    private Dao mWorkSpaceDao;
+    private Dao mNoteListDao;
+    private Dao mMediaDao;
+    private Dao mCheckItemDao;
 
     public BeanNotesDatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, VERSION);
@@ -60,6 +60,7 @@ public class BeanNotesDatabaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.createTable(connectionSource, Note.class);
             TableUtils.createTable(connectionSource, CheckItem.class);
             TableUtils.createTable(connectionSource, Media.class);
+            TableUtils.createTable(connectionSource, WorkSpaceNoteMap.class);
             initFirstLaunchData();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -77,20 +78,26 @@ public class BeanNotesDatabaseHelper extends OrmLiteSqliteOpenHelper {
         workSpace.setInited(true);
         workSpace.setName("My Ideas");
         workSpace = getWorkSpaceDao().createIfNotExists(workSpace);
+        ArrayList<Note> notes = new ArrayList<Note>();
         Note note = new Note();
         note.setParent_id(workSpace.get_id());
         note.setName("Note1");
         note.setReminder(false);
         note.setText("This is my first note");
         note.setCreateTime(new Date(System.currentTimeMillis()));
-        getNoteListDao().createIfNotExists(note);
+        note.setStared(true);
+        getNoteListDao().createOrUpdate(note);
         note = new Note();
         note.setParent_id(workSpace.get_id());
         note.setName("Note1.1");
         note.setReminder(false);
         note.setText("This is my note1.1");
         note.setCreateTime(new Date(System.currentTimeMillis()));
-        getNoteListDao().createIfNotExists(note);
+        note.setStared(false);
+        getNoteListDao().createOrUpdate(note);
+        notes = (ArrayList<Note>) getNoteListDao().queryForEq(Note.COLUMN_PARENT_ID, workSpace.get_id());
+        workSpace.setCount(notes == null ? 0 : notes.size());
+        getWorkSpaceDao().update(workSpace);
         workSpace = new WorkSpace();
         workSpace.setColor(ColorUtil.COLOR_BASE_1);
         workSpace.setCount(0);
@@ -103,7 +110,11 @@ public class BeanNotesDatabaseHelper extends OrmLiteSqliteOpenHelper {
         note.setReminder(false);
         note.setText("This is my second note");
         note.setCreateTime(new Date(System.currentTimeMillis()));
-        getNoteListDao().createIfNotExists(note);
+        note.setStared(true);
+        getNoteListDao().createOrUpdate(note);
+        notes = (ArrayList<Note>) getNoteListDao().queryForEq(Note.COLUMN_PARENT_ID, workSpace.get_id());
+        workSpace.setCount(notes == null ? 0 : notes.size());
+        getWorkSpaceDao().update(workSpace);
     }
 
     public Dao<WorkSpace, Long> getWorkSpaceDao() throws SQLException {
@@ -118,5 +129,19 @@ public class BeanNotesDatabaseHelper extends OrmLiteSqliteOpenHelper {
             mNoteListDao = getDao(Note.class);
         }
         return mNoteListDao;
+    }
+
+    public Dao<Media, Long> getMediaDao() throws SQLException {
+        if (mMediaDao == null) {
+            mMediaDao = getDao(Media.class);
+        }
+        return mMediaDao;
+    }
+
+    public Dao<CheckItem, Long> getCheckItemDao() throws SQLException {
+        if (mCheckItemDao == null) {
+            mCheckItemDao = getDao(CheckItem.class);
+        }
+        return mCheckItemDao;
     }
 }

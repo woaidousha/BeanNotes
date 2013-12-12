@@ -20,7 +20,7 @@ import com.j256.ormlite.table.DatabaseTable;
 import java.util.Date;
 
 @DatabaseTable(tableName = "notes")
-public class Note implements Switchable {
+public class Note implements Switchable, IContent {
 
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_PARENT_ID = "parent_id";
@@ -30,6 +30,7 @@ public class Note implements Switchable {
     public static final String COLUMN_TEXT = "text";
     public static final String COLUMN_LATITUDE = "latitude";
     public static final String COLUMN_LONGITUDE = "longitude";
+    public static final String COLUMN_STARED = "stared";
 
     public Note() {
     }
@@ -50,6 +51,8 @@ public class Note implements Switchable {
     private double latitude;
     @DatabaseField(useGetSet = true, dataType = DataType.DOUBLE, columnName = COLUMN_LONGITUDE)
     private double longitude;
+    @DatabaseField(useGetSet = true, dataType = DataType.BOOLEAN, columnName = COLUMN_STARED)
+    private boolean stared;
 
     public long get_id() {
         return _id;
@@ -115,6 +118,14 @@ public class Note implements Switchable {
         this.longitude = longitude;
     }
 
+    public boolean getStared() {
+        return stared;
+    }
+
+    public void setStared(boolean stared) {
+        this.stared = stared;
+    }
+
     @Override
     public long getContentId() {
         return _id;
@@ -132,7 +143,7 @@ public class Note implements Switchable {
 
     @Override
     public String toString() {
-        return "Note{" +
+        return "NoteFragment{" +
                 "_id=" + _id +
                 ", parent_id=" + parent_id +
                 ", name='" + name + '\'' +
@@ -141,6 +152,17 @@ public class Note implements Switchable {
                 ", text='" + text + '\'' +
                 ", latitude=" + latitude +
                 ", longitude=" + longitude +
+                ", stared=" + stared +
                 '}';
+    }
+
+    @Override
+    public int getContentType() {
+        return TYPE_TEXT;
+    }
+
+    @Override
+    public long getModifyDate() {
+        return getCreateTime().getTime();
     }
 }

@@ -26,7 +26,7 @@ import com.bean.notes.tools.ColorUtil;
 import java.sql.SQLException;
 import java.util.List;
 
-public class WorkSpaceList extends BaseIndexFragment implements AdapterView.OnItemClickListener {
+public class WorkSpaceListFragment extends BaseIndexFragment implements AdapterView.OnItemClickListener {
 
     private ListView mWorkSpaceListView;
     private List<WorkSpace> mWorkSpaces;

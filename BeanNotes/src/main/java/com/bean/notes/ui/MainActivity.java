@@ -63,9 +63,9 @@ public class MainActivity extends SherlockFragmentActivity implements OperatorBa
     private ImageView mMenuItemStar;
     private ImageView mMenuItemDelete;
 
-    private Note mNote;
-    private NoteList mNoteList;
-    private WorkSpaceList mWorkSpaceList;
+    private NoteFragment mNoteFragment;
+    private NoteListFragment mNoteListFragment;
+    private WorkSpaceListFragment mWorkSpaceListFragment;
 
     private MenuItemListener mMenuItemListener;
 
@@ -172,19 +172,19 @@ public class MainActivity extends SherlockFragmentActivity implements OperatorBa
                 mCurrentId = -1;
                 transaction.replace(R.id.fragment_container, getWorkSpaceList());
             } else if (mCurrentFragment == FM_INDEX_NOTELIST) {
-                NoteList noteList = getNoteList();
-                transaction.replace(R.id.fragment_container, noteList);
+                NoteListFragment noteListFragment = getNoteList();
+                transaction.replace(R.id.fragment_container, noteListFragment);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable(BaseIndexFragment.ARGV_SWITCHABLE, switchable);
-                noteList.setArguments(bundle);
+                noteListFragment.setArguments(bundle);
                 transaction.addToBackStack(null);
                 homeAsUpEnable = true;
             } else if (mCurrentFragment == FM_INDEX_NOTE) {
-                Note note = getNote();
+                NoteFragment noteFragment = getNote();
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("switchable", switchable);
-                note.setArguments(bundle);
-                transaction.replace(R.id.fragment_container, note);
+                bundle.putSerializable(BaseIndexFragment.ARGV_SWITCHABLE, switchable);
+                noteFragment.setArguments(bundle);
+                transaction.replace(R.id.fragment_container, noteFragment);
                 transaction.addToBackStack(null);
                 homeAsUpEnable = true;
             }
@@ -211,30 +211,30 @@ public class MainActivity extends SherlockFragmentActivity implements OperatorBa
         doSwitchFragment(switchable, next);
     }
 
-    private WorkSpaceList getWorkSpaceList() {
-        if (mWorkSpaceList == null) {
-            mWorkSpaceList = new WorkSpaceList();
-            mWorkSpaceList.setSwitchFragmentListener(this);
+    private WorkSpaceListFragment getWorkSpaceList() {
+        if (mWorkSpaceListFragment == null) {
+            mWorkSpaceListFragment = new WorkSpaceListFragment();
+            mWorkSpaceListFragment.setSwitchFragmentListener(this);
         }
-        return mWorkSpaceList;
+        return mWorkSpaceListFragment;
     }
 
-    public NoteList getNoteList() {
-        if (mNoteList == null) {
-            mNoteList = new NoteList();
-            mNoteList.setSwitchFragmentListener(this);
+    public NoteListFragment getNoteList() {
+        if (mNoteListFragment == null) {
+            mNoteListFragment = new NoteListFragment();
+            mNoteListFragment.setSwitchFragmentListener(this);
         }
-        return mNoteList;
+        return mNoteListFragment;
     }
 
-    public Note getNote() {
-        if (mNote == null) {
-            mNote = new Note();
-            mNote.setSwitchFragmentListener(this);
+    public NoteFragment getNote() {
+        if (mNoteFragment == null) {
+            mNoteFragment = new NoteFragment();
+            mNoteFragment.setSwitchFragmentListener(this);
             mMenuItemListener = new MenuItemListener();
-            mNote.setMenuItemStateListener(mMenuItemListener);
+            mNoteFragment.setMenuItemStateListener(mMenuItemListener);
         }
-        return mNote;
+        return mNoteFragment;
     }
 
     @Override

@@ -21,15 +21,12 @@ import android.widget.*;
 import com.bean.notes.R;
 import com.bean.notes.bean.Note;
 import com.bean.notes.db.BeanNotesDatabaseHelper;
-import com.bean.notes.tools.LogUtil;
 import com.bean.notes.tools.TimeUtil;
 
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-public class NoteList extends BaseIndexFragment implements AdapterView.OnItemClickListener {
+public class NoteListFragment extends BaseIndexFragment implements AdapterView.OnItemClickListener {
 
     private ListView mNotesListView;
 
@@ -55,13 +52,8 @@ public class NoteList extends BaseIndexFragment implements AdapterView.OnItemCli
         Switchable switchable = (Switchable) bundle.get(ARGV_SWITCHABLE);
         setSwitchable(switchable);
         BeanNotesDatabaseHelper helper = BeanNotesDatabaseHelper.getInstance();
-        Map<String, Object> map = new HashMap<String, Object>();
-        map.put(Note.COLUMN_PARENT_ID, switchable.getContentId());
         try {
-            mNotesList = helper.getNoteListDao().queryForFieldValues(map);
-            for (Note note : mNotesList) {
-                LogUtil.lyl("note:" + note.toString());
-            }
+            mNotesList = helper.getNoteListDao().queryForEq(Note.COLUMN_PARENT_ID, switchable.getContentId());
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -123,6 +115,7 @@ public class NoteList extends BaseIndexFragment implements AdapterView.OnItemCli
             viewHolder.noteName.setText(note.getName());
             viewHolder.noteDescription.setText(note.getText());
             viewHolder.noteDate.setText(TimeUtil.formatTimeStampString(getActivity(), note.getCreateTime().getTime(), true));
+            viewHolder.noteStar.setVisibility(note.getStared() ? View.VISIBLE : View.GONE);
             return convertView;
         }
     }

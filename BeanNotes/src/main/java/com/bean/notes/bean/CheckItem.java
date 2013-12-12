@@ -19,20 +19,26 @@ import com.j256.ormlite.table.DatabaseTable;
 import java.util.Date;
 
 @DatabaseTable(tableName = "check_items")
-public class CheckItem {
+public class CheckItem implements IContent {
+
+    public static final String COLUMN_ID = "_id";
+    public static final String COLUMN_PARENT_ID = "parent_id";
+    public static final String COLUMN_CREATE_TIME = "createTime";
+    public static final String COLUMN_TEXT = "text";
+    public static final String COLUMN_CHECKED = "checked";
 
     public CheckItem() {
     }
 
-    @DatabaseField(generatedId = true, useGetSet = true)
+    @DatabaseField(generatedId = true, useGetSet = true, columnName = COLUMN_ID)
     private long _id;
-    @DatabaseField(useGetSet = true, dataType = DataType.LONG)
+    @DatabaseField(useGetSet = true, dataType = DataType.LONG, columnName = COLUMN_PARENT_ID)
     private long parent_id;
-    @DatabaseField(useGetSet = true, dataType = DataType.DATE_LONG)
+    @DatabaseField(useGetSet = true, dataType = DataType.DATE_LONG, columnName = COLUMN_CREATE_TIME)
     private Date createTime;
-    @DatabaseField(useGetSet = true, dataType = DataType.STRING)
+    @DatabaseField(useGetSet = true, dataType = DataType.STRING, columnName = COLUMN_TEXT)
     private String text;
-    @DatabaseField(useGetSet = true, dataType = DataType.BOOLEAN)
+    @DatabaseField(useGetSet = true, dataType = DataType.BOOLEAN, columnName = COLUMN_CHECKED)
     private boolean checked;
 
     public long get_id() {
@@ -73,5 +79,15 @@ public class CheckItem {
 
     public void setChecked(boolean checked) {
         this.checked = checked;
+    }
+
+    @Override
+    public int getContentType() {
+        return TYPE_CHECK_ITEM;
+    }
+
+    @Override
+    public long getModifyDate() {
+        return getCreateTime().getTime();
     }
 }

@@ -19,7 +19,7 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable(tableName = "workspace")
-public class WorkSpace implements Switchable{
+public class WorkSpace implements Switchable {
 
     public WorkSpace() {
     }
@@ -77,6 +77,10 @@ public class WorkSpace implements Switchable{
 
     public void setCount(int count) {
         this.count = count;
+    }
+
+    public void addCount(int count) {
+        this.count += count;
     }
 
     public String getDescription() {
