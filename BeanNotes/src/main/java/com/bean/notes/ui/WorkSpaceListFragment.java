@@ -12,24 +12,24 @@
 */
 package com.bean.notes.ui;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import com.bean.notes.R;
 import com.bean.notes.bean.WorkSpace;
-import com.bean.notes.db.BeanNotesDatabaseHelper;
 import com.bean.notes.tools.ColorUtil;
 
-import java.sql.SQLException;
 import java.util.List;
 
-public class WorkSpaceListFragment extends BaseIndexFragment implements AdapterView.OnItemClickListener {
+public class WorkSpaceListFragment extends BaseIndexFragment implements AdapterView.OnItemClickListener, LoaderManager.LoaderCallbacks<List<WorkSpace>> {
+
+    private static final int LOADER_WORKSPACES_ID = 0x1001;
 
     private ListView mWorkSpaceListView;
-    private List<WorkSpace> mWorkSpaces;
     private WorkSpaceAdapter mAdapter;
 
     @Override
@@ -41,18 +41,28 @@ public class WorkSpaceListFragment extends BaseIndexFragment implements AdapterV
     public void onViewCreated(View view, Bundle savedInstanceState) {
         mWorkSpaceListView = (ListView) view.findViewById(R.id.workspace_list);
         mWorkSpaceListView.setOnItemClickListener(this);
+        mAdapter = new WorkSpaceAdapter();
         mWorkSpaceListView.setAdapter(mAdapter);
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        mAdapter = new WorkSpaceAdapter();
-        try {
-            mWorkSpaces = BeanNotesDatabaseHelper.getInstance().getWorkSpaceDao().queryForAll();
-        } catch (SQLException e) {
-            e.printStackTrace();
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        getLoaderManager().initLoader(LOADER_WORKSPACES_ID, null, this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (!getLoaderManager().hasRunningLoaders()) {
+            getLoaderManager().restartLoader(LOADER_WORKSPACES_ID, null, this);
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        getLoaderManager().destroyLoader(LOADER_WORKSPACES_ID);
     }
 
     @Override
@@ -68,12 +78,40 @@ public class WorkSpaceListFragment extends BaseIndexFragment implements AdapterV
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         WorkSpace workSpace = (WorkSpace) mAdapter.getItem(position);
-        if (mSwitchFragmentListener != null) {
-            mSwitchFragmentListener.switchFragment(true, workSpace);
+        if (workSpace.isCreateNew()) {
+
+        } else {
+            if (mSwitchFragmentListener != null) {
+                mSwitchFragmentListener.switchFragment(true, workSpace);
+            }
         }
     }
 
+    @Override
+    public Loader<List<WorkSpace>> onCreateLoader(int i, Bundle bundle) {
+        return new WorkSpaceLoader(getActivity());
+    }
+
+    @Override
+    public void onLoadFinished(Loader<List<WorkSpace>> listLoader, List<WorkSpace> workSpaces) {
+        mAdapter.setData(workSpaces);
+        mWorkSpaceListView.invalidate();
+    }
+
+    @Override
+    public void onLoaderReset(Loader<List<WorkSpace>> listLoader) {
+        mAdapter.setData(null);
+        mWorkSpaceListView.invalidate();
+    }
+
     private class WorkSpaceAdapter extends BaseAdapter {
+
+        private List<WorkSpace> mWorkSpaces;
+
+        public void setData(List<WorkSpace> workSpaces) {
+            mWorkSpaces = workSpaces;
+        }
+
         @Override
         public int getCount() {
             return mWorkSpaces == null ? 0 : mWorkSpaces.size();

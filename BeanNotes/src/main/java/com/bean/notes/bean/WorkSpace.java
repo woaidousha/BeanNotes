@@ -12,11 +12,17 @@
 */
 package com.bean.notes.bean;
 
+import android.content.Context;
+import android.content.res.Resources;
+import com.bean.notes.R;
+import com.bean.notes.db.BeanNotesDatabaseHelper;
 import com.bean.notes.tools.ColorUtil;
 import com.bean.notes.ui.Switchable;
 import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
+
+import java.sql.SQLException;
 
 @DatabaseTable(tableName = "workspace")
 public class WorkSpace implements Switchable {
@@ -38,6 +44,9 @@ public class WorkSpace implements Switchable {
     private String description;
     @DatabaseField(useGetSet = true, dataType = DataType.BOOLEAN)
     private boolean inited;
+
+    private boolean isAll;
+    private boolean createNew;
 
     public Long get_id() {
         return _id;
@@ -99,6 +108,22 @@ public class WorkSpace implements Switchable {
         this.inited = inited;
     }
 
+    public boolean isAll() {
+        return isAll;
+    }
+
+    public void setAll(boolean isAll) {
+        this.isAll = isAll;
+    }
+
+    public boolean isCreateNew() {
+        return createNew;
+    }
+
+    public void setCreateNew(boolean createNew) {
+        this.createNew = createNew;
+    }
+
     @Override
     public String toString() {
         return "WorkSpace{" +
@@ -124,5 +149,37 @@ public class WorkSpace implements Switchable {
     @Override
     public Integer getActivityColor() {
         return ColorUtil.getActionBarAndBottomBg(color);
+    }
+
+    public static WorkSpace getCreateNewWorkSpace(Context context) {
+        if (context == null) {
+            return null;
+        }
+        Resources resources = context.getResources();
+        WorkSpace workSpace = new WorkSpace();
+        workSpace.set_id(-1l);
+        workSpace.setCreateNew(true);
+        workSpace.setColor(ColorUtil.COLOR_BASE_5);
+        workSpace.setName(resources.getString(R.string.work_space_create_new));
+        return workSpace;
+    }
+
+    public static WorkSpace getAllWorkSpace(Context context) {
+        if (context == null) {
+            return null;
+        }
+        Resources resources = context.getResources();
+        WorkSpace workSpace = new WorkSpace();
+        workSpace.set_id(-1l);
+        workSpace.setAll(true);
+        workSpace.setColor(ColorUtil.COLOR_BASE_ALL);
+        BeanNotesDatabaseHelper helper = BeanNotesDatabaseHelper.getInstance();
+        try {
+            workSpace.setCount((int) helper.getNoteListDao().countOf());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        workSpace.setName(resources.getString(R.string.work_space_create_new));
+        return workSpace;
     }
 }

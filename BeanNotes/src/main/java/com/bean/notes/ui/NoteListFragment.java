@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.*;
 import com.bean.notes.R;
 import com.bean.notes.bean.Note;
+import com.bean.notes.bean.WorkSpace;
 import com.bean.notes.db.BeanNotesDatabaseHelper;
 import com.bean.notes.tools.TimeUtil;
 
@@ -27,6 +28,8 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class NoteListFragment extends BaseIndexFragment implements AdapterView.OnItemClickListener {
+
+    private WorkSpace mWorkSpace;
 
     private ListView mNotesListView;
 
@@ -53,11 +56,20 @@ public class NoteListFragment extends BaseIndexFragment implements AdapterView.O
         setSwitchable(switchable);
         BeanNotesDatabaseHelper helper = BeanNotesDatabaseHelper.getInstance();
         try {
-            mNotesList = helper.getNoteListDao().queryForEq(Note.COLUMN_PARENT_ID, switchable.getContentId());
+            if (mWorkSpace.isAll()) {
+                mNotesList = helper.getNoteListDao().queryForAll();
+            } else {
+                mNotesList = helper.getNoteListDao().queryForEq(Note.COLUMN_PARENT_ID, switchable.getContentId());
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         mAdapter = new NoteListAdapter();
+    }
+
+    @Override
+    public void setSwitchable(Switchable switchable) {
+        mWorkSpace = (WorkSpace) switchable;
     }
 
     @Override

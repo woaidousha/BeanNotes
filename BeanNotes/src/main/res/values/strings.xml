@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <resources>
-
     <string name="app_name">BeanNotes</string>
 
+    <string name="work_space_create_new">Create New Workspace</string>
+    <string name="work_space_all">All Notes</string>
 </resources>

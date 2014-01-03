@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">豆子笔记</string>
+
+    <string name="work_space_create_new">创建新空间</string>
+    <string name="work_space_all">全部笔记</string>
+</resources>
