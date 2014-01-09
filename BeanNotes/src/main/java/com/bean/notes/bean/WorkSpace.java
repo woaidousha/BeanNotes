@@ -27,22 +27,30 @@ import java.sql.SQLException;
 @DatabaseTable(tableName = "workspace")
 public class WorkSpace implements Switchable {
 
+    public static final String COLUMN_ID = "_id";
+    public static final String COLUMN_NAME = "name";
+    public static final String COLUMN_SECURITY = "security";
+    public static final String COLUMN_COLOR = "color";
+    public static final String COLUMN_COUNT = "count";
+    public static final String COLUMN_DESCRIPTION = "description";
+    public static final String COLUMN_INITED = "inited";
+
     public WorkSpace() {
     }
 
-    @DatabaseField(generatedId = true, useGetSet = true)
+    @DatabaseField(generatedId = true, useGetSet = true, columnName = COLUMN_ID)
     private Long _id;
-    @DatabaseField(useGetSet = true, dataType = DataType.STRING)
+    @DatabaseField(useGetSet = true, dataType = DataType.STRING, columnName = COLUMN_NAME)
     private String name;
-    @DatabaseField(useGetSet = true, dataType = DataType.BOOLEAN)
+    @DatabaseField(useGetSet = true, dataType = DataType.BOOLEAN, columnName = COLUMN_SECURITY)
     private boolean security;
-    @DatabaseField(useGetSet = true, dataType = DataType.INTEGER)
+    @DatabaseField(useGetSet = true, dataType = DataType.INTEGER, columnName = COLUMN_COLOR)
     private int color;
-    @DatabaseField(useGetSet = true, dataType = DataType.INTEGER)
+    @DatabaseField(useGetSet = true, dataType = DataType.INTEGER, columnName = COLUMN_COUNT)
     private int count;
-    @DatabaseField(useGetSet = true, dataType = DataType.STRING)
+    @DatabaseField(useGetSet = true, dataType = DataType.STRING, columnName = COLUMN_DESCRIPTION)
     private String description;
-    @DatabaseField(useGetSet = true, dataType = DataType.BOOLEAN)
+    @DatabaseField(useGetSet = true, dataType = DataType.BOOLEAN, columnName = COLUMN_INITED)
     private boolean inited;
 
     private boolean isAll;
@@ -179,7 +187,7 @@ public class WorkSpace implements Switchable {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        workSpace.setName(resources.getString(R.string.work_space_create_new));
+        workSpace.setName(resources.getString(R.string.work_space_all));
         return workSpace;
     }
 }

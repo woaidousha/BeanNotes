@@ -24,4 +24,11 @@ public class LogUtil {
         Log.d("lyl", text);
     }
 
+    public static void e(String tag, String text) {
+        Log.e(tag, text);
+    }
+
+    public static void e(String tag, String text, Throwable t) {
+        Log.e(tag, text, t);
+    }
 }

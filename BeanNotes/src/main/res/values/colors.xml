@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="action_bar_title">#ffffffff</color>
+    <color name="action_bar_title">#fff2f2f2</color>
+    <color name="action_bar_title_text">#ff777777</color>
+    <color name="action_bar_title_shadow">#ffffffff</color>
+
+    <color name="home_gradient_start">#ffe3e3e3</color>
+    <color name="home_gradient_end">#ffcacaca</color>
 
     <color name="fragment_comment_bg">#ffd0d0d0</color>
+
+    <color name="color_picker_frame_padding">#ffffffff</color>
+    <color name="color_picker_frame_stroke">#ffb0b0b0</color>
 
     <color name="content_shadow">#55000000</color>
     <color name="wheel_expend_bg">#fff2f2f2</color>
@@ -10,6 +18,15 @@
     <color name="expend_menu_selected_bg">#80e7a846</color>
     <color name="bottom_bar_item_pressed_background">#26000000</color>
     <color name="bottom_bar_item_focused_background">#1a000000</color>
+
+    <color name="workspace_orange">#ffe7a846</color>
+    <color name="workspace_green">#ff5fbf88</color>
+    <color name="workspace_aqua">#ff1aa4b4</color>
+    <color name="workspace_blue">#ff6664a8</color>
+    <color name="workspace_purple">#ff993c99</color>
+    <color name="workspace_grey">#ff656565</color>
+    <color name="workspace_all_notes">#ffa9a9a9</color>
+    <color name="workspace_create_new">#ffd7d7d7</color>
 
     <color name="workspace_list_item_bg_base_0_fill_focused">#4ce7a846</color>
     <color name="workspace_list_item_bg_base_0_fill_pressed">#80e7a846</color>
@@ -51,4 +68,35 @@
     <color name="notelist_background">#ffffffff</color>
     <color name="notelist_item_primary_text">#ff555555</color>
     <color name="notelist_item_secondary_text">#ff555555</color>
+
+    <color name="create_workspace_container_bg">#ffffffff</color>
+
+    <color name="note_overscroll_shadow_start">#26000000</color>
+    <color name="note_overscroll_shadow_end">#00000000</color>
+
+    <color name="common_button_text">#ffffffff</color>
+    <color name="common_button_text_shadow">#ffd18a2f</color>
+    <color name="common_button_disabled_fill">#ffeaeaea</color>
+    <color name="common_button_disabled_stroke">#ffe1e1e1</color>
+    <color name="common_button_stroke">#ffd87301</color>
+    <color name="common_button_focused_stroke">#ffd67200</color>
+    <color name="common_button_pressed_stroke">#4cd87301</color>
+    <color name="common_button_gradient_end">#fff69321</color>
+    <color name="common_button_gradient_start">#fff1b353</color>
+    <color name="common_button_pressed_gradient_end">#ffec7e00</color>
+    <color name="common_button_pressed_gradient_start">#ffec7e00</color>
+    <color name="common_button_focused_gradient_end">#b3ec7e00</color>
+    <color name="common_button_focused_gradient_start">#b3ec7e00</color>
+
+    <color name="blue_button_stroke">#ff0c4770</color>
+    <color name="blue_button_focused_stroke">#ffed6f2a</color>
+    <color name="blue_button_pressed_stroke">#ff0c4770</color>
+    <color name="blue_button_disabled_stroke">#ff808080</color>
+    <color name="blue_button_gradient_end">#ff104f7a</color>
+    <color name="blue_button_gradient_start">#ff3e7eab</color>
+    <color name="blue_button_pressed_gradient_end">#ff0c4770</color>
+    <color name="blue_button_pressed_gradient_start">#ff0c4770</color>
+    <color name="blue_button_disabled_gradient_end">#ff9a9a9a</color>
+    <color name="blue_button_disabled_gradient_start">#ffa0a0a0</color>
+
 </resources>

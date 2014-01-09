@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@drawable/create_workspace_bg">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/create_workspace_container_bg"
+        android:padding="@dimen/create_workspace_container_padding"
+        android:orientation="vertical">
+        <EditText
+            android:id="@+id/workspace_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:background="@drawable/create_workspace_edit_bg"
+            android:hint="@string/create_workspace_edit_hint"
+            android:inputType="textCapSentences|textAutoCorrect"
+            android:padding="@dimen/create_workspace_edit_padding"
+            android:layout_marginBottom="@dimen/create_workspace_view_margin_top_bottom"
+            android:imeOptions="actionDone"/>
+        <com.bean.notes.widget.ColorPicker
+            android:id="@+id/color_picker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/create_workspace_view_margin_top_bottom"
+            android:layout_marginBottom="@dimen/create_workspace_view_margin_top_bottom" />
+        <Button
+            android:id="@+id/create_workspace_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/create_workspace_button"
+            android:layout_marginTop="@dimen/create_workspace_view_margin_top_bottom"
+            style="@style/CommonButton"/>
+    </LinearLayout>
+
+    <View
+        android:background="@drawable/note_overscroll_shadow_footer"
+        android:visibility="invisible"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/create_workspace_container_shadow_height"/>
+
+</LinearLayout>

@@ -17,6 +17,14 @@ import com.bean.notes.R;
 
 public class ColorUtil {
 
+    public static int[] sColorsRes = {
+            R.drawable.workspace_list_item_base_0_selector,
+            R.drawable.workspace_list_item_base_1_selector,
+            R.drawable.workspace_list_item_base_2_selector,
+            R.drawable.workspace_list_item_base_3_selector,
+            R.drawable.workspace_list_item_base_4_selector,
+            R.drawable.workspace_list_item_base_5_selector,};
+
     public static final int COLOR_BASE_0 = 0;
     public static final int COLOR_BASE_1 = 1;
     public static final int COLOR_BASE_2 = 2;
@@ -25,7 +33,7 @@ public class ColorUtil {
     public static final int COLOR_BASE_5 = 5;
     public static final int COLOR_BASE_ALL = 6;
 
-    public static int getWorkSpaceCellSelector(int colorBase) {
+    public static int getWorkSpaceCellSelectorByColorBase(int colorBase) {
         int selectorRes = R.drawable.workspace_list_item_base_0_selector;
         switch (colorBase) {
             case COLOR_BASE_1:
@@ -48,6 +56,35 @@ public class ColorUtil {
                 break;
         }
         return selectorRes;
+    }
+
+    public static int getColorBaseByWorkspaceSelector(int selector) {
+        int colorBase = COLOR_BASE_0;
+        switch (selector) {
+            case R.drawable.workspace_list_item_base_1_selector:
+                colorBase = COLOR_BASE_1;
+                break;
+            case R.drawable.workspace_list_item_base_2_selector:
+                colorBase = COLOR_BASE_2;
+                break;
+            case R.drawable.workspace_list_item_base_3_selector:
+                colorBase = COLOR_BASE_3;
+                break;
+            case R.drawable.workspace_list_item_base_4_selector:
+                colorBase = COLOR_BASE_4;
+                break;
+            case R.drawable.workspace_list_item_base_5_selector:
+                colorBase = COLOR_BASE_5;
+                break;
+            case R.drawable.workspace_list_item_all_selector:
+                colorBase = COLOR_BASE_ALL;
+                break;
+        }
+        return colorBase;
+    }
+
+    public static int getWorkspaceDespByColorBase(int colorBase) {
+        return 0;
     }
 
     public static int getActionBarAndBottomBg(int colorBase) {

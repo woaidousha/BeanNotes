@@ -4,4 +4,6 @@
 
     <string name="work_space_create_new">Create New Workspace</string>
     <string name="work_space_all">All Notes</string>
+    <string name="create_workspace_edit_hint">Input workspace name</string>
+    <string name="create_workspace_button">Create Workspace</string>
 </resources>

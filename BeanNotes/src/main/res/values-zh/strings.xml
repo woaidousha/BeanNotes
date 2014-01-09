@@ -4,4 +4,6 @@
 
     <string name="work_space_create_new">创建新空间</string>
     <string name="work_space_all">全部笔记</string>
+    <string name="create_workspace_edit_hint">输入空间名称</string>
+    <string name="create_workspace_button">创建空间</string>
 </resources>

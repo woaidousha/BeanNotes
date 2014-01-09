@@ -12,9 +12,11 @@
 */
 package com.bean.notes.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,9 +56,7 @@ public class WorkSpaceListFragment extends BaseIndexFragment implements AdapterV
     @Override
     public void onResume() {
         super.onResume();
-        if (!getLoaderManager().hasRunningLoaders()) {
-            getLoaderManager().restartLoader(LOADER_WORKSPACES_ID, null, this);
-        }
+        getLoaderManager().restartLoader(LOADER_WORKSPACES_ID, null, this);
     }
 
     @Override
@@ -79,7 +79,7 @@ public class WorkSpaceListFragment extends BaseIndexFragment implements AdapterV
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         WorkSpace workSpace = (WorkSpace) mAdapter.getItem(position);
         if (workSpace.isCreateNew()) {
-
+            launchCreateNewWorkspace();
         } else {
             if (mSwitchFragmentListener != null) {
                 mSwitchFragmentListener.switchFragment(true, workSpace);
@@ -95,13 +95,18 @@ public class WorkSpaceListFragment extends BaseIndexFragment implements AdapterV
     @Override
     public void onLoadFinished(Loader<List<WorkSpace>> listLoader, List<WorkSpace> workSpaces) {
         mAdapter.setData(workSpaces);
-        mWorkSpaceListView.invalidate();
+        mAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void onLoaderReset(Loader<List<WorkSpace>> listLoader) {
         mAdapter.setData(null);
-        mWorkSpaceListView.invalidate();
+        mAdapter.notifyDataSetChanged();
+    }
+
+    private void launchCreateNewWorkspace() {
+        Intent intent = new Intent(getActivity(), CreateNewWorkSpaceActivity.class);
+        startActivity(intent);
     }
 
     private class WorkSpaceAdapter extends BaseAdapter {
@@ -143,9 +148,16 @@ public class WorkSpaceListFragment extends BaseIndexFragment implements AdapterV
             }
             WorkSpace workSpace = (WorkSpace) getItem(position);
             holder.mName.setText(workSpace.getName());
-            holder.mDescription.setText(workSpace.getDescription());
+            String description = workSpace.getDescription();
+            if (TextUtils.isEmpty(description)) {
+                holder.mDescription.setVisibility(View.GONE);
+            } else {
+                holder.mDescription.setVisibility(View.VISIBLE);
+                holder.mDescription.setText(description);
+            }
+            holder.mCount.setVisibility(workSpace.isCreateNew() ? View.GONE : View.VISIBLE);
             holder.mCount.setText(workSpace.getCount() + "");
-            convertView.setBackgroundResource(ColorUtil.getWorkSpaceCellSelector(workSpace.getColor()));
+            convertView.setBackgroundResource(ColorUtil.getWorkSpaceCellSelectorByColorBase(workSpace.getColor()));
             return convertView;
         }
 

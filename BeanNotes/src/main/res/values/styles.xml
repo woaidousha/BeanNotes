@@ -1,6 +1,25 @@
 <resources>
 
-    <style name="BaseTheme" parent="Sherlock.__Theme.DarkActionBar">
+    <style name="BaseTheme" parent="Theme.Sherlock.Light">
+        <item name="actionBarStyle">@style/BaseActionBar</item>
+        <item name="android:actionBarStyle">@style/BaseActionBar</item>
+    </style>
+
+    <style name="BaseActionBar" parent="Widget.Sherlock.ActionBar.Solid">
+        <item name="android:background">@drawable/home_gradient</item>
+        <item name="background">@drawable/home_gradient</item>
+        <item name="titleTextStyle">@style/BaseActionBar.TitleTextStyle</item>
+        <item name="android:titleTextStyle">@style/BaseActionBar.TitleTextStyle</item>
+    </style>
+
+    <style name="BaseActionBar.TitleTextStyle" parent="TextAppearance.Sherlock.Widget.ActionBar.Title">
+        <item name="android:textSize">@dimen/action_bar_title</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/action_bar_title_text</item>
+        <item name="android:shadowColor">@color/action_bar_title_shadow</item>
+        <item name="android:shadowDx">0</item>
+        <item name="android:shadowDy">-3</item>
+        <item name="android:shadowRadius">1</item>
     </style>
 
     <style name="Bottom_Bar_Menu_Item">
@@ -19,4 +38,18 @@
         <item name="android:singleLine">true</item>
     </style>
 
+    <style name="CommonButton">
+        <item name="android:textSize">@dimen/common_button_text</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/common_button_text</item>
+        <item name="android:background">@drawable/common_button_selector</item>
+        <item name="android:maxWidth">@dimen/common_button_maxwidth</item>
+        <item name="android:minWidth">@dimen/common_button_minwidth</item>
+        <item name="android:minHeight">@dimen/common_button_minheight</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:shadowColor">@color/common_button_text_shadow</item>
+        <item name="android:shadowDx">0.0</item>
+        <item name="android:shadowDy">-1.0</item>
+        <item name="android:shadowRadius">1.0</item>
+    </style>
 </resources>
