@@ -4,6 +4,9 @@
     <color name="action_bar_title_text">#ff777777</color>
     <color name="action_bar_title_shadow">#ffffffff</color>
 
+    <color name="main_action_bar_title_text">#ffffffff</color>
+    <color name="main_action_bar_title_shadow">#ff000000</color>
+
     <color name="home_gradient_start">#ffe3e3e3</color>
     <color name="home_gradient_end">#ffcacaca</color>
 

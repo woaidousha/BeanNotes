@@ -83,10 +83,6 @@ public class ColorUtil {
         return colorBase;
     }
 
-    public static int getWorkspaceDespByColorBase(int colorBase) {
-        return 0;
-    }
-
     public static int getActionBarAndBottomBg(int colorBase) {
         int colorRes = R.color.workspace_list_item_bg_base_0_gradient_start;
         switch (colorBase) {

@@ -1,5 +1,5 @@
 <resources>
-    <dimen name="action_bar_title">20sp</dimen>
+    <dimen name="action_bar_title">23sp</dimen>
 
     <dimen name="color_picker_corner_radius">2.0dip</dimen>
     <dimen name="color_picker_frame_padding">3.0dip</dimen>

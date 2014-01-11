@@ -48,7 +48,6 @@ public class MainActivity extends SherlockFragmentActivity implements OperatorBa
     private int mLastmActionAndBottomBg;
     private boolean mColorMode;
     private String mTitle;
-    private long mCurrentId = -1;
     private boolean mFirstLaunch = true;
 
     private FragmentManager mFragmentManager;
@@ -135,6 +134,8 @@ public class MainActivity extends SherlockFragmentActivity implements OperatorBa
     private void initData() {
         mTitle = "";
         mActionAndBottomBg = getResources().getColor(R.color.bottom_bar_bg);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle(mTitle);
     }
 
     private void initViews() {
@@ -161,6 +162,7 @@ public class MainActivity extends SherlockFragmentActivity implements OperatorBa
         transaction.replace(R.id.fragment_container, getWorkSpaceList());
         transaction.commit();
         mFirstLaunch = false;
+
     }
 
     private void doSwitchFragment(Switchable switchable, boolean next) {
@@ -169,7 +171,6 @@ public class MainActivity extends SherlockFragmentActivity implements OperatorBa
         boolean homeAsUpEnable = false;
         if (next) {
             if (mCurrentFragment == FM_INDEX_WORKSPACE) {
-                mCurrentId = -1;
                 transaction.replace(R.id.fragment_container, getWorkSpaceList());
             } else if (mCurrentFragment == FM_INDEX_NOTELIST) {
                 NoteListFragment noteListFragment = getNoteList();
@@ -190,6 +191,9 @@ public class MainActivity extends SherlockFragmentActivity implements OperatorBa
             }
         } else {
             getSupportFragmentManager().popBackStack();
+            if (mCurrentFragment == FM_INDEX_WORKSPACE) {
+                mTitle = "";
+            }
         }
         actionBar.setDisplayHomeAsUpEnabled(homeAsUpEnable);
         transaction.commit();
@@ -206,7 +210,6 @@ public class MainActivity extends SherlockFragmentActivity implements OperatorBa
                 mActionAndBottomBg = switchable.getActivityColor();
             }
             mTitle = switchable.getTitle();
-            mCurrentId = switchable.getContentId();
         }
         doSwitchFragment(switchable, next);
     }
